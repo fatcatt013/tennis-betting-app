@@ -1,0 +1,29 @@
+<form [formGroup]="betForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="match">Match:</label>
+    <input id="match" formControlName="match">
+    <div *ngIf="betForm.controls['match'].invalid && (betForm.controls['match'].dirty || betForm.controls['match'].touched)">
+      <div *ngIf="betForm.controls['match'].errors['required']">Match is required.</div>
+    </div>
+  </div>
+
+  <div>
+    <label for="amount">Amount:</label>
+    <input id="amount" type="number" formControlName="amount">
+    <div *ngIf="betForm.controls['amount'].invalid && (betForm.controls['amount'].dirty || betForm.controls['amount'].touched)">
+      <div *ngIf="betForm.controls['amount'].errors['required']">Amount is required.</div>
+      <div *ngIf="betForm.controls['amount'].errors?.min">Amount must be greater than 0.</div>
+    </div>
+  </div>
+
+  <div>
+    <label for="odds">Odds:</label>
+    <input id="odds" type="number" formControlName="odds">
+    <div *ngIf="betForm.controls['odds'].invalid && (betForm.controls['odds'].dirty || betForm.controls['odds'].touched)">
+      <div *ngIf="betForm.controls['odds'].errors['required']">Odds are required.</div>
+      <div *ngIf="betForm.controls['odds'].errors?.min">Odds must be greater than 0.</div>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="betForm.invalid">Submit</button>
+</form>
