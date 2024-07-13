@@ -8,12 +8,14 @@ export interface IPLayer {
 
 export interface IMatch {
   id: string;
-  playerOne: string;
-  playerTwo: string;
+  playerOne: IPLayer;
+  playerTwo: IPLayer;
   bets: IBet[];
   currentSet: 1 | 2 | 3;
   points: { playerOne: number; playerTwo: number };
   finished: boolean;
   totalMoneyInvested: number;
   potentialBets?: IBet[];
+  date?: string;
+  place?: string;
 }

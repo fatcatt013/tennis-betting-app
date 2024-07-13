@@ -25,9 +25,10 @@ export class AppComponent implements OnInit {
     this.updates$
       .pipe(ofType(loadJsonSuccess.type), distinctUntilChanged())
       .subscribe((action: any) => {
-        console.log(action);
         if (action._type === 'matches') {
-          this.store.dispatch(loadMatches(action.data));
+          console.log('MATCHES DATA:');
+          console.log(action.data);
+          this.store.dispatch(loadMatches({ data: action.data }));
         }
       });
   }

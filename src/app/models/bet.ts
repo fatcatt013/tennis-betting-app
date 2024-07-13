@@ -6,6 +6,7 @@ export enum EBetType {
 
 export interface IBet {
   matchId: string;
+  id: string;
   player: string;
   odds: number;
   amount: number;

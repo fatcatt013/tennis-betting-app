@@ -13,7 +13,6 @@ export const initialState: MatchesState = {
 export const matchesReducer = createReducer(
   initialState,
   on(loadMatches, (state, { data }) => ({
-    ...state,
     matches: data,
   }))
 );

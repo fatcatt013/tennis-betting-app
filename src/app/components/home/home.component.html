@@ -1,10 +1,10 @@
-<div>
-  <h1>Live Betting Interface</h1>
-  <a routerLink="/add-bet">Add Bet</a>
-  <ul>
-    <li *ngFor="let bet of bets">
-      {{ bet.match }} - {{ bet.player }} - Odds: {{ bet.odds }} - Amount:
-      {{ bet.amount }} - Potential Win: {{ bet.potentialWin }}
-    </li>
-  </ul>
+<div class="p-4">
+  <div class="row">
+    <div class="card m-2 col">
+      <div class="card-body"><app-add-match></app-add-match></div>
+    </div>
+    <div class="card m-2 col">
+      <div class="card-body"><app-bet-entry></app-bet-entry></div>
+    </div>
+  </div>
 </div>
