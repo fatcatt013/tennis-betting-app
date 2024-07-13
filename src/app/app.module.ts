@@ -16,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
 import { jsonReducer } from './redux/reducers/json.reducer';
 import { JsonEffects } from './redux/effects/json.effects';
+import { matchesReducer } from './redux/reducers/matches.reducer';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { JsonEffects } from './redux/effects/json.effects';
     HttpClientModule,
     NgbModule,
     NgSelectModule,
-    StoreModule.forRoot({ json: jsonReducer }),
+    StoreModule.forRoot({ json: jsonReducer, matches: matchesReducer }),
     EffectsModule.forRoot([JsonEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

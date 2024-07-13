@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { JsonLoaderService } from './services/json-loader.service';
+import { Store } from '@ngrx/store';
+import { loadJson, loadJsonSuccess } from './redux/actions/json.actions';
+import { Actions, ofType } from '@ngrx/effects';
 import { distinctUntilChanged } from 'rxjs';
+import { loadMatches } from './redux/actions/matches.actions';
 
 @Component({
   selector: 'app-root',
@@ -9,27 +12,23 @@ import { distinctUntilChanged } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'Live betting';
-  betsUrl = 'assets/data/bets.json';
+  matchesUrl = 'assets/data/matches.json';
 
-  constructor(private jsonLoaderService: JsonLoaderService) {}
+  constructor(
+    private store: Store,
+    private updates$: Actions
+  ) {}
 
   ngOnInit(): void {
-    // Example usage:
-    this.jsonLoaderService
-      .loadJson(this.betsUrl)
-      .pipe(distinctUntilChanged())
-      .subscribe((jsonData: any) => {
-        console.log('Loaded JSON data:', jsonData);
+    this.store.dispatch(loadJson({ url: this.matchesUrl, _type: 'matches' }));
 
-        const transformFn = (data: any) => {
-          return data;
-        };
-
-        this.jsonLoaderService
-          .rewriteAndSaveJson(this.betsUrl, transformFn)
-          .subscribe(() => {
-            console.log('JSON data rewritten and saved successfully.');
-          });
+    this.updates$
+      .pipe(ofType(loadJsonSuccess.type), distinctUntilChanged())
+      .subscribe((action: any) => {
+        console.log(action);
+        if (action._type === 'matches') {
+          this.store.dispatch(loadMatches(action.data));
+        }
       });
   }
 }

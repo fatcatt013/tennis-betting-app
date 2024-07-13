@@ -2,12 +2,12 @@ import { createAction, props } from '@ngrx/store';
 
 export const loadJson = createAction(
   '[JSON] Load JSON',
-  props<{ url: string }>()
+  props<{ url: string; _type: string }>()
 );
 
 export const loadJsonSuccess = createAction(
   '[JSON] Load JSON Success',
-  props<{ data: any }>()
+  props<{ data: any; _type: string }>()
 );
 
 export const loadJsonFailure = createAction(

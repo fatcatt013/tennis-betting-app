@@ -7,12 +7,19 @@ import * as JsonActions from '../actions/json.actions';
 
 @Injectable()
 export class JsonEffects {
+  constructor(
+    private actions$: Actions,
+    private http: HttpClient
+  ) {}
+
   loadJson$ = createEffect(() =>
     this.actions$.pipe(
       ofType(JsonActions.loadJson),
       switchMap((action) =>
         this.http.get(action.url).pipe(
-          map((data: any) => JsonActions.loadJsonSuccess({ data })),
+          map((data: any) =>
+            JsonActions.loadJsonSuccess({ data, _type: action._type })
+          ),
           catchError((error) => of(JsonActions.loadJsonFailure({ error })))
         )
       )
@@ -49,9 +56,4 @@ export class JsonEffects {
       )
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private http: HttpClient
-  ) {}
 }
