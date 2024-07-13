@@ -1,52 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import * as JsonActions from '../redux/actions/json.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JsonLoaderService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store<{ json: any }>
+  ) {}
 
-  // Method to load a JSON file from a URL
-  loadJson(url: string) {
-    return this.http.get(url).pipe(
-      map((data: any) => {
-        // Optionally transform the data if needed
-        return data;
-      }),
-      catchError((error: any) => {
-        console.error('Error loading JSON file', error);
-        return throwError(error);
-      })
-    );
+  loadJson(url: string): Observable<any> {
+    this.store.dispatch(JsonActions.loadJson({ url }));
+    // You can return an observable from the store if needed
+    return this.store.select((state) => state.json.data);
   }
 
-  // Method to save JSON data to a file
-  saveJson(url: string, jsonData: any) {
-    // Assuming you have a backend endpoint to handle saving
+  saveJson(url: string, jsonData: any): Observable<any> {
+    this.store.dispatch(JsonActions.saveJson({ url, data: jsonData }));
+    // Handle response/error as needed
     return this.http.put(url, jsonData).pipe(
-      catchError((error: any) => {
+      catchError((error) => {
+        // Handle error
         console.error('Error saving JSON file', error);
-        return throwError(error);
+        throw error;
       })
     );
   }
 
-  // Method to rewrite JSON data and save it
-  rewriteAndSaveJson(url: string, transformFn: (data: any) => any) {
-    return this.loadJson(url).pipe(
-      map((data: any) => {
-        const transformedData = transformFn(data);
-        return transformedData;
-      }),
-      catchError((error: any) => {
+  rewriteAndSaveJson(
+    url: string,
+    transformFn: (data: any) => any
+  ): Observable<any> {
+    this.store.dispatch(JsonActions.rewriteAndSaveJson({ url, transformFn }));
+    // Handle response/error as needed
+    return this.http.get(url).pipe(
+      transformFn((data: any) => transformFn(data)),
+      catchError((error) => {
+        // Handle error
         console.error('Error rewriting and saving JSON file', error);
-        return throwError(error);
-      }),
-      // Save the transformed data
-      map((transformedData: any) => this.saveJson(url, transformedData))
+        throw error;
+      })
     );
   }
 }
