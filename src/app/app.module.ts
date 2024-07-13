@@ -8,6 +8,7 @@ import { BetEntryComponent } from './components/bet-entry/bet-entry.component';
 import { BetListComponent } from './components/bet-list/bet-list.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     BetEntryComponent,
     BetListComponent,
   ],
-  imports: [BrowserModule, CommonModule, ReactiveFormsModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    NgbModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
