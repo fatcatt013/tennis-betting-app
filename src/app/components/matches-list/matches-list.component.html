@@ -1,46 +1,87 @@
-<div class="container mt-5">
+<div class="container">
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 mb-3">
       <h4 class="text-center mb-4">Upcoming Matches</h4>
     </div>
     <div class="col-md-4" *ngFor="let match of matches$ | async">
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h5 class="card-title">{{ match.place }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ match.date }}</h6>
-        </div>
-        <div class="card-body">
-          <div class="d-flex row">
-            <h6 class="col">{{ match.playerOne.name }}</h6>
-            <div class="d-flex justify-content-between align-items-center col">
-              <span class="score">
-                <strong>{{ match.points.playerOne }}</strong>
-              </span>
-              <span>-</span>
-              <span class="score">
-                <strong>{{ match.points.playerTwo }}</strong>
-              </span>
-            </div>
-            <h6 class="col text-end">
-              {{ match.playerTwo.name }}
-            </h6>
+      <ng-container
+        *ngIf="
+          {
+            isHighlighted: matchesService.isHighlighted(match.id) | async,
+          };
+          let context
+        "
+      >
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="card-title">{{ match.place }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ match.date }}</h6>
           </div>
-          <hr />
-          <div class="d-flex justify-content-between">
-            <div>
-              <p>Odds: {{ match.playerOne.startingOdds }}</p>
+          <div class="card-body">
+            <div class="d-flex row">
+              <h6 class="col">{{ match.playerOne.name }}</h6>
+              <div
+                class="d-flex justify-content-between align-items-center col"
+              >
+                <span class="score">
+                  <strong>{{ match.points.playerOne }}</strong>
+                </span>
+                <span>-</span>
+                <span class="score">
+                  <strong>{{ match.points.playerTwo }}</strong>
+                </span>
+              </div>
+              <h6 class="col text-end">
+                {{ match.playerTwo.name }}
+              </h6>
             </div>
-            <div>
-              <p>Odds: {{ match.playerTwo.startingOdds }}</p>
+            <hr />
+            <div class="d-flex justify-content-between">
+              <div>
+                <p>Odds: {{ match.playerOne.startingOdds }}</p>
+              </div>
+              <div>
+                <p>Odds: {{ match.playerTwo.startingOdds }}</p>
+              </div>
+            </div>
+            <p>Current Set: {{ match.currentSet }}</p>
+            <p>Total Money Invested: {{ match.totalMoneyInvested }} CZK</p>
+          </div>
+          <div
+            class="card-footer d-flex justify-content-between align-items-center"
+          >
+            <small class="text-muted">Match ID: {{ match.id }}</small>
+            <div ngbDropdown placement="top-end" class="d-inline-block">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                id="dropdownBasic2"
+                ngbDropdownToggle
+              >
+                Actions
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                <button
+                  ngbDropdownItem
+                  (click)="matchesService.handleHighlight(match.id)"
+                  *ngIf="!context.isHighlighted"
+                >
+                  Highlight
+                </button>
+                <button
+                  ngbDropdownItem
+                  (click)="matchesService.handleUnhighlight(match.id)"
+                  *ngIf="context.isHighlighted"
+                >
+                  Unhighlight
+                </button>
+                <button ngbDropdownItem>Edit</button>
+                <button ngbDropdownItem>Delete</button>
+              </div>
             </div>
           </div>
-          <p>Current Set: {{ match.currentSet }}</p>
-          <p>Total Money Invested: {{ match.totalMoneyInvested }} CZK</p>
         </div>
-        <div class="card-footer">
-          <small class="text-muted">Match ID: {{ match.id }}</small>
-        </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>

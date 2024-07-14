@@ -37,3 +37,13 @@ export const editMatch = createAction(
   '[Matches] Edit match',
   props<{ id: string; data: IMatch }>()
 );
+
+export const highlightMatch = createAction(
+  '[Matches] Highlight match',
+  props<{ id: string }>()
+);
+
+export const unhighlightMatch = createAction(
+  '[Matches] Unhighlight match',
+  props<{ id: string }>()
+);

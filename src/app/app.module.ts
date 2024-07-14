@@ -20,6 +20,7 @@ import { MatchesEffects } from './redux/effects/matches.effects';
 import { MatchesListComponent } from './components/matches-list/matches-list.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SofascoreEffects } from './redux/effects/sofascore.effects';
+import { MatchesOverviewComponent } from './components/matches-overview/matches-overview.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SofascoreEffects } from './redux/effects/sofascore.effects';
     AddMatchComponent,
     MatchesListComponent,
     NavbarComponent,
+    MatchesOverviewComponent,
   ],
   imports: [
     BrowserModule,

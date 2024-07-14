@@ -120,3 +120,81 @@ body {
     }
   }
 }
+// Custom styles for ngbDropdown
+.ngb-dropup,
+.dropup {
+  .dropdown-menu {
+    background-color: $card-bg;
+    border: 1px solid $card-border;
+    color: $card-body-color;
+
+    .dropdown-item {
+      color: $card-body-color;
+
+      &:hover,
+      &:focus {
+        background-color: darken($card-bg, 10%);
+        color: $card-header-color;
+      }
+
+      &:active {
+        background-color: darken($primary-color, 10%);
+        color: $card-header-color;
+      }
+
+      &.disabled,
+      &:disabled {
+        color: $text-muted-color;
+        background-color: $card-bg;
+      }
+    }
+  }
+
+  .dropdown-toggle {
+    background-color: $primary-color;
+    color: $card-header-color;
+    border: 1px solid $card-border;
+
+    &:hover,
+    &:focus {
+      background-color: darken($primary-color, 10%);
+      color: $card-header-color;
+    }
+
+    &.disabled,
+    &:disabled {
+      background-color: $text-muted-color;
+      color: $card-body-color;
+      border-color: $card-border;
+    }
+  }
+}
+
+// Custom styles for ngbDropdownMenu
+.ngb-dropdown-menu,
+.dropdown-menu {
+  background-color: $card-bg;
+  border: 1px solid $card-border;
+  color: $card-body-color;
+
+  .dropdown-item {
+    color: $card-body-color;
+
+    &:hover,
+    &:focus {
+      background-color: darken($card-bg, 10%);
+      color: $card-header-color;
+    }
+
+    &:active {
+      background-color: darken($primary-color, 10%);
+      color: $card-header-color;
+    }
+
+    &.disabled,
+    &:disabled {
+      color: $text-muted-color;
+      background-color: $card-bg;
+    }
+  }
+}

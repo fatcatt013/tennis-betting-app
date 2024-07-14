@@ -8,3 +8,8 @@ export const selectMatches = createSelector(
   selectMatchesState,
   (state: MatchesState) => state.matches
 );
+
+export const selectHighlightedMatches = createSelector(
+  selectMatchesState,
+  (state: MatchesState) => state.highlightedMatches
+);
