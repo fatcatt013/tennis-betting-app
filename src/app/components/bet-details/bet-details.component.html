@@ -1,0 +1,20 @@
+<div *ngIf="match?.bets?.length">
+  <div *ngFor="let bet of match.bets" class="bet-card">
+    <div class="bet-header">
+      <h5 class="player-name">{{ bet.player.name }}</h5>
+      <span class="starting-odds"
+        >Starting Odds: {{ bet.player.startingOdds }}</span
+      >
+    </div>
+    <div class="bet-body">
+      <p>Type: {{ bet.type }}</p>
+      <p>Amount: {{ bet.amount }}</p>
+      <p>Odds: {{ bet.odds }}</p>
+      <p>Potential Win: {{ bet.potentialWin }}</p>
+    </div>
+    <div class="bet-footer">
+      <small>Match ID: {{ bet.matchId }}</small>
+      <small>Bet ID: {{ bet.id }}</small>
+    </div>
+  </div>
+</div>

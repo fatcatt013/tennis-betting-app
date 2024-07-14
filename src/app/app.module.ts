@@ -21,6 +21,7 @@ import { MatchesListComponent } from './components/matches-list/matches-list.com
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SofascoreEffects } from './redux/effects/sofascore.effects';
 import { MatchesOverviewComponent } from './components/matches-overview/matches-overview.component';
+import { BetDetailsComponent } from './components/bet-details/bet-details.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatchesOverviewComponent } from './components/matches-overview/matches-
     MatchesListComponent,
     NavbarComponent,
     MatchesOverviewComponent,
+    BetDetailsComponent,
   ],
   imports: [
     BrowserModule,

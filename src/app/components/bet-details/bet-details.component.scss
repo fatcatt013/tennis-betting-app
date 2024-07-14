@@ -1,0 +1,44 @@
+.bet-card {
+  background-color: #393053;
+  border: 1px solid #18122b;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  color: #ecf0f1;
+
+  .bet-header {
+    background-color: #18122b;
+    padding: 0.5rem;
+    border-bottom: 1px solid #18122b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .player-name {
+      font-size: 1.25rem;
+      color: #ecf0f1;
+    }
+
+    .starting-odds {
+      color: #95a5a6;
+    }
+  }
+
+  .bet-body {
+    padding: 0.5rem;
+    p {
+      margin: 0.25rem 0;
+    }
+  }
+
+  .bet-footer {
+    background-color: #443c68;
+    padding: 0.5rem;
+    border-top: 1px solid #18122b;
+    display: flex;
+    justify-content: space-between;
+    small {
+      color: #ecf0f1;
+    }
+  }
+}

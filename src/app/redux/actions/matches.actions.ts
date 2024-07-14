@@ -38,6 +38,16 @@ export const editMatch = createAction(
   props<{ id: string; data: IMatch }>()
 );
 
+export const editMatchSuccess = createAction(
+  '[Matches] Edit match success',
+  props<{ matches: IMatch[] }>()
+);
+
+export const editMatchFailure = createAction(
+  '[Matches] Edit match failure',
+  props<{ err: any }>()
+);
+
 export const highlightMatch = createAction(
   '[Matches] Highlight match',
   props<{ id: string }>()

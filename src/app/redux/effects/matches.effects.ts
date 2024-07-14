@@ -1,6 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
 import {
+  editMatch,
+  editMatchFailure,
+  editMatchSuccess,
   loadMatches,
   loadMatchesFailure,
   loadMatchesSuccess,
@@ -44,6 +47,22 @@ export class MatchesEffects {
               newMatchSuccess({ matches: res.matches })
             ),
             catchError((err: any) => of(newMatchFailure({ err: err })))
+          );
+      })
+    )
+  );
+
+  editMatch$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editMatch),
+      mergeMap(({ id, data }) => {
+        return this.api
+          .put<{ matches: IMatch[] }>(`/data/matches/${id}`, data)
+          .pipe(
+            map((res: { matches: IMatch[] }) =>
+              editMatchSuccess({ matches: res.matches })
+            ),
+            catchError((err: any) => of(editMatchFailure({ err: err })))
           );
       })
     )

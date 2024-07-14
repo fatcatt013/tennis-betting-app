@@ -189,3 +189,73 @@ body {
     }
   }
 }
+
+.ng-select {
+  .ng-select-container {
+    padding: 6px 12px;
+    background-color: $primary-color;
+    color: $card-body-color;
+    border-radius: 0.375rem;
+
+    .ng-value-container {
+      .ng-placeholder {
+        color: $text-muted-color;
+      }
+      .ng-value {
+        .ng-value-label {
+          color: $card-body-color;
+        }
+        .ng-value-icon {
+          color: $card-header-color;
+        }
+      }
+    }
+  }
+
+  .ng-dropdown-panel {
+    background-color: $card-bg;
+    border: 1px solid white;
+    color: $card-body-color;
+
+    .ng-option {
+      color: $card-body-color;
+
+      &.disabled,
+      &.ng-option-disabled {
+        color: $text-muted-color;
+        background-color: $card-bg;
+      }
+
+      &:hover,
+      &.ng-option-highlighted {
+        background-color: darken($card-bg, 10%);
+        color: $card-header-color;
+      }
+
+      &.ng-option-selected {
+        background-color: darken($primary-color, 10%);
+        color: $card-header-color;
+      }
+    }
+  }
+
+  .ng-select-clear-zone {
+    .ng-clear {
+      color: $card-header-color;
+
+      &:hover {
+        color: darken($card-header-color, 10%);
+      }
+    }
+  }
+
+  .ng-arrow-zone {
+    .ng-arrow {
+      border-color: $card-header-color;
+
+      &:hover {
+        border-color: darken($card-header-color, 10%);
+      }
+    }
+  }
+}

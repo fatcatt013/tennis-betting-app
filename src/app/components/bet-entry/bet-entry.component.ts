@@ -1,7 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { newMatch } from 'src/app/redux/actions/matches.actions';
+import { Observable } from 'rxjs';
+import { MatchesService } from 'src/app/matches.service';
+import { EBetType, IBetType } from 'src/app/models/bet';
+import { editMatch, newMatch } from 'src/app/redux/actions/matches.actions';
+import { IMatch } from 'src/app/redux/interfaces/matches.interfaces';
+import { selectMatches } from 'src/app/redux/selectors/matches.selectors';
 
 @Component({
   selector: 'app-bet-entry',
@@ -11,42 +16,59 @@ import { newMatch } from 'src/app/redux/actions/matches.actions';
 export class BetEntryComponent implements OnInit {
   betForm!: FormGroup;
   @Input() matchId!: string;
+  matches$: Observable<IMatch[]> = this.store.select(selectMatches);
 
+  betTypes: IBetType[] = [
+    {
+      value: EBetType.FIRST_SET_WIN,
+      label: '1. set WIN',
+    },
+    {
+      value: EBetType.SECOND_SET_WIN,
+      label: '2. set WIN',
+    },
+    {
+      value: EBetType.MATCH_WIN,
+      label: 'match WIN',
+    },
+  ];
   constructor(
     private fb: FormBuilder,
-    private store: Store
+    private store: Store,
+    public matchesService: MatchesService
   ) {}
 
   ngOnInit(): void {
     this.betForm = this.fb.group({
-      match: ['', Validators.required],
+      match: [null, Validators.required],
       amount: ['', [Validators.required, Validators.min(1)]],
       odds: ['', [Validators.required, Validators.min(1)]],
+      player: [null, [Validators.required]],
+      type: [null, [Validators.required]],
     });
   }
 
   onSubmit(): void {
     if (this.betForm.valid) {
+      let val = this.betForm.value;
       this.store.dispatch(
-        newMatch({
-          match: {
-            id: Date.now().toString(),
-            bets: [],
-            currentSet: 1,
-            points: {
-              playerOne: 0,
-              playerTwo: 0,
-            },
-            finished: false,
-            totalMoneyInvested: 0,
-            playerOne: {
-              startingOdds: 0,
-              name: '',
-            },
-            playerTwo: {
-              startingOdds: 0,
-              name: '',
-            },
+        editMatch({
+          id: val.match.id,
+          data: {
+            ...val.match,
+            totalMoneyInvested: val.match.totalMoneyInvested + val.amount,
+            bets: [
+              ...val.match.bets,
+              {
+                player: val.player,
+                type: val.type.value,
+                amount: val.amount,
+                odds: val.odds,
+                matchId: val.match.id,
+                id: Date.now().toString(),
+                potentialWin: val.odds * val.amount,
+              },
+            ],
           },
         })
       );

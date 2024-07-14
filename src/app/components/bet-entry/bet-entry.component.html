@@ -4,12 +4,19 @@
   </div>
   <div class="form-group">
     <label for="match">Match:</label>
-    <input
+    <ng-select
       id="match"
       formControlName="match"
-      class="form-control"
-      autocomplete="off"
-    />
+      [items]="matches$ | async"
+      [searchable]="false"
+    >
+      <ng-template ng-label-tmp let-item="item">
+        <span *ngIf="item">{{ matchesService.getMatchTabHeader(item) }}</span>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-index="index">
+        <div>{{ matchesService.getMatchTabHeader(item) }}</div>
+      </ng-template>
+    </ng-select>
     <div
       *ngIf="
         betForm.controls['match'].invalid &&
@@ -23,52 +30,81 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="amount">Amount:</label>
-    <input
-      id="amount"
-      type="number"
-      autocomplete="off"
-      formControlName="amount"
-      class="form-control"
-    />
-    <div
-      *ngIf="
-        betForm.controls['amount'].invalid &&
-        (betForm.controls['amount'].dirty || betForm.controls['amount'].touched)
-      "
-      class="text-danger"
-    >
-      <div *ngIf="betForm.controls['amount'].errors?.required">
-        Amount is required.
-      </div>
-      <div *ngIf="betForm.controls['amount'].errors?.min">
-        Amount must be greater than 0.
-      </div>
+  <div class="row" *ngIf="betForm.controls['match'].value">
+    <div class="col form-group">
+      <label for="player">Player:</label>
+      <ng-select
+        id="player"
+        formControlName="player"
+        [items]="[
+          betForm.controls['match'].value.playerOne,
+          betForm.controls['match'].value.playerTwo,
+        ]"
+        bindLabel="name"
+        [searchable]="false"
+      />
+    </div>
+    <div class="col form-group">
+      <label for="type">Bet type:</label>
+      <ng-select
+        id="type"
+        formControlName="type"
+        [items]="betTypes"
+        bindLabel="label"
+        [searchable]="false"
+      />
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="odds">Odds:</label>
-    <input
-      id="odds"
-      type="number"
-      formControlName="odds"
-      class="form-control"
-      autocomplete="off"
-    />
-    <div
-      *ngIf="
-        betForm.controls['odds'].invalid &&
-        (betForm.controls['odds'].dirty || betForm.controls['odds'].touched)
-      "
-      class="text-danger"
-    >
-      <div *ngIf="betForm.controls['odds'].errors?.required">
-        Odds are required.
+  <div class="row">
+    <div class="col form-group">
+      <label for="amount">Amount:</label>
+      <input
+        id="amount"
+        type="number"
+        autocomplete="off"
+        formControlName="amount"
+        class="form-control"
+      />
+      <div
+        *ngIf="
+          betForm.controls['amount'].invalid &&
+          (betForm.controls['amount'].dirty ||
+            betForm.controls['amount'].touched)
+        "
+        class="text-danger"
+      >
+        <div *ngIf="betForm.controls['amount'].errors?.required">
+          Amount is required.
+        </div>
+        <div *ngIf="betForm.controls['amount'].errors?.min">
+          Amount must be greater than 0.
+        </div>
       </div>
-      <div *ngIf="betForm.controls['odds'].errors?.min">
-        Odds must be greater than 0.
+    </div>
+
+    <div class="col form-group">
+      <label for="odds">Odds:</label>
+      <input
+        id="odds"
+        type="number"
+        formControlName="odds"
+        class="form-control"
+        autocomplete="off"
+      />
+      <div
+        *ngIf="
+          betForm.controls['odds'].invalid &&
+          (betForm.controls['odds'].dirty || betForm.controls['odds'].touched)
+        "
+        class="text-danger"
+      >
+        <div *ngIf="betForm.controls['odds'].errors?.required">
+          Odds are required.
+        </div>
+        <div *ngIf="betForm.controls['odds'].errors?.min">
+          Odds must be greater than 0.
+        </div>
       </div>
     </div>
   </div>
