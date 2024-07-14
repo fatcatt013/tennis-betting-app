@@ -32,4 +32,12 @@ export class MatchesService {
   handleUnhighlight(id: string) {
     this.store.dispatch(unhighlightMatch({ id }));
   }
+
+  getMatchTabHeader(match: IMatch): string {
+    return (
+      match.playerOne.name.split(' ')[1] +
+      ' - ' +
+      match.playerTwo.name.split(' ')[1]
+    );
+  }
 }

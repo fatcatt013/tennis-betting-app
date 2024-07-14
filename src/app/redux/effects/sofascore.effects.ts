@@ -19,15 +19,13 @@ export class SofascoreEffects {
   seachForMatch$ = createEffect(() =>
     this.actions$.pipe(
       ofType(searchForMatch),
-      mergeMap(({ p1, p2 }) => {
+      mergeMap(({ p1, p2, id }) => {
         return this.api
           .get<{
             records: IMatch[];
           }>(`/sofascore/search-match?players=${p1} ${p2}`)
           .pipe(
-            map((res: any) =>
-              searchForMatchSuccess({ match: res.records ?? [] })
-            ),
+            map((res: any) => searchForMatchSuccess({ match: res.entity, id })),
             catchError((err: any) => of(searchForMatchFailure({ err: err })))
           );
       })

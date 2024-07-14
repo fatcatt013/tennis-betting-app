@@ -1,1 +1,190 @@
-<p>matches-overview works!</p>
+<div class="p-4">
+  <div class="h-100">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <h4>Highlighted Matches</h4>
+          </div>
+        </div>
+        <div *ngIf="loading">Loading data...</div>
+        <div *ngIf="!loading">
+          <!-- Tabs Section -->
+          <ul class="nav nav-tabs mt-4">
+            <li
+              class="nav-item"
+              *ngFor="let match of highlightedMatches$ | async; let i = index"
+              role="button"
+            >
+              <a
+                class="nav-link"
+                [ngClass]="{ active: selectedTab === i }"
+                (click)="selectTab(i)"
+              >
+                {{ matchesService.getMatchTabHeader(match) }}
+              </a>
+            </li>
+          </ul>
+
+          <!-- Tab Content Section -->
+          <div
+            class="tab-content mt-3"
+            *ngIf="highlightedMatches$ | async as highlightedMatches"
+          >
+            <div
+              class="tab-pane fade show active"
+              *ngFor="let highlightedMatch of highlightedMatches; let i = index"
+              [ngClass]="{ active: selectedTab === i }"
+            >
+              <ng-container
+                *ngIf="
+                  { match: matchesData[highlightedMatches[i].id] };
+                  let sofascoreData
+                "
+              >
+                <ng-container *ngIf="sofascoreData.match"
+                  ><h5>Match Details</h5>
+                  <div class="row">
+                    <div class="col-12 mb-3">
+                      <h6>General Information</h6>
+                      <p><strong>ID:</strong> {{ highlightedMatch.id }}</p>
+                      <p>
+                        <strong>Status:</strong>
+                        {{ sofascoreData.match.status.description }}
+                      </p>
+                      <p>
+                        <strong>Winner Code:</strong>
+                        {{ sofascoreData.match.winnerCode }}
+                      </p>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <h6>Teams</h6>
+                      <div class="d-flex justify-content-between">
+                        <div class="team-card">
+                          <h6>Home Team</h6>
+                          <p>
+                            <strong>Name:</strong>
+                            {{ sofascoreData.match.homeTeam.name }}
+                          </p>
+                          <p>
+                            <strong>Short Name:</strong>
+                            {{ sofascoreData.match.homeTeam.shortName }}
+                          </p>
+                          <p>
+                            <strong>Country:</strong>
+                            {{ sofascoreData.match.homeTeam.country.name }}
+                          </p>
+                          <p>
+                            <strong>Ranking:</strong>
+                            {{ sofascoreData.match.homeTeam.ranking }}
+                          </p>
+                        </div>
+                        <div class="team-card">
+                          <h6>Away Team</h6>
+                          <p>
+                            <strong>Name:</strong>
+                            {{ sofascoreData.match.awayTeam.name }}
+                          </p>
+                          <p>
+                            <strong>Short Name:</strong>
+                            {{ sofascoreData.match.awayTeam.shortName }}
+                          </p>
+                          <p>
+                            <strong>Country:</strong>
+                            {{ sofascoreData.match.awayTeam.country.name }}
+                          </p>
+                          <p>
+                            <strong>Ranking:</strong>
+                            {{ sofascoreData.match.awayTeam.ranking }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                      <h6>Scores</h6>
+                      <div class="row">
+                        <div class="col">
+                          <p>
+                            <strong>Home Score:</strong>
+                            {{ sofascoreData.match.homeScore.display }}
+                          </p>
+                          <p>
+                            <strong>Period 1:</strong>
+                            {{ sofascoreData.match.homeScore.period1 }}
+                          </p>
+                          <p>
+                            <strong>Period 2:</strong>
+                            {{ sofascoreData.match.homeScore.period2 }}
+                          </p>
+                          <p>
+                            <strong>Period 2 Tie Break:</strong>
+                            {{ sofascoreData.match.homeScore.period2TieBreak }}
+                          </p>
+                          <p>
+                            <strong>Point:</strong>
+                            {{ sofascoreData.match.homeScore.point }}
+                          </p>
+                        </div>
+                        <div class="col">
+                          <p>
+                            <strong>Away Score:</strong>
+                            {{ sofascoreData.match.awayScore.display }}
+                          </p>
+                          <p>
+                            <strong>Period 1:</strong>
+                            {{ sofascoreData.match.awayScore.period1 }}
+                          </p>
+                          <p>
+                            <strong>Period 2:</strong>
+                            {{ sofascoreData.match.awayScore.period2 }}
+                          </p>
+                          <p>
+                            <strong>Period 2 Tie Break:</strong>
+                            {{ sofascoreData.match.awayScore.period2TieBreak }}
+                          </p>
+                          <p>
+                            <strong>Point:</strong>
+                            {{ sofascoreData.match.awayScore.point }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <div class="col-12 mb-3">
+                      <h6>Time</h6>
+                      <p>
+                        <strong>Period 1:</strong>
+                        {{ sofascoreData.match.time.period1 }} seconds
+                      </p>
+                      <p>
+                        <strong>Period 2:</strong>
+                        {{ sofascoreData.match.time.period2 }} seconds
+                      </p>
+                      <p>
+                        <strong>Current Period Start:</strong>
+                        {{
+                          sofascoreData.match.time.currentPeriodStartTimestamp
+                            | date: 'medium'
+                        }}
+                      </p>
+                    </div> -->
+
+                    <div class="col-12 mb-3">
+                      <h6>Tournament</h6>
+                      <p>
+                        <strong>Name:</strong>
+                        {{ sofascoreData.match.tournament.name }}
+                      </p>
+                    </div>
+                  </div></ng-container
+                >
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
