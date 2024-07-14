@@ -1,7 +1,15 @@
 <form [formGroup]="betForm" (ngSubmit)="onSubmit()">
+  <div class="col-12">
+    <h4 class="text-center mb-4">Place a bet</h4>
+  </div>
   <div class="form-group">
     <label for="match">Match:</label>
-    <input id="match" formControlName="match" class="form-control" />
+    <input
+      id="match"
+      formControlName="match"
+      class="form-control"
+      autocomplete="off"
+    />
     <div
       *ngIf="
         betForm.controls['match'].invalid &&
@@ -20,6 +28,7 @@
     <input
       id="amount"
       type="number"
+      autocomplete="off"
       formControlName="amount"
       class="form-control"
     />
@@ -46,6 +55,7 @@
       type="number"
       formControlName="odds"
       class="form-control"
+      autocomplete="off"
     />
     <div
       *ngIf="

@@ -18,6 +18,7 @@ import { matchesReducer } from './redux/reducers/matches.reducer';
 import { AddMatchComponent } from './components/add-match/add-match.component';
 import { MatchesEffects } from './redux/effects/matches.effects';
 import { MatchesListComponent } from './components/matches-list/matches-list.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { MatchesListComponent } from './components/matches-list/matches-list.com
     BetListComponent,
     AddMatchComponent,
     MatchesListComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

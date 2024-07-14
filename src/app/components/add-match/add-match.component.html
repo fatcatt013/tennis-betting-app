@@ -1,6 +1,8 @@
 <form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
   <div class="container">
-    <!-- Player 1 and Player 2 fields side by side -->
+    <div class="col-12">
+      <h4 class="text-center mb-4">Add a new match</h4>
+    </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -11,6 +13,7 @@
             formControlName="playerOneName"
             class="form-control"
             placeholder="Enter Player 1 Name"
+            autocomplete="off"
           />
           <div
             *ngIf="
@@ -34,6 +37,7 @@
             type="number"
             formControlName="playerOneOdds"
             class="form-control"
+            autocomplete="off"
             placeholder="Enter Player 1 Starting Odds"
           />
           <div
@@ -62,6 +66,7 @@
             id="playerTwoName"
             type="text"
             formControlName="playerTwoName"
+            autocomplete="off"
             class="form-control"
             placeholder="Enter Player 2 Name"
           />
@@ -86,6 +91,7 @@
             id="playerTwoOdds"
             type="number"
             formControlName="playerTwoOdds"
+            autocomplete="off"
             class="form-control"
             placeholder="Enter Player 2 Starting Odds"
           />
@@ -114,6 +120,7 @@
           <label for="date">Date</label>
           <input
             id="date"
+            autocomplete="off"
             type="date"
             formControlName="date"
             class="form-control"
@@ -127,6 +134,7 @@
           <label for="place">Place</label>
           <input
             id="place"
+            autocomplete="off"
             type="text"
             formControlName="place"
             class="form-control"
