@@ -19,6 +19,7 @@ import { AddMatchComponent } from './components/add-match/add-match.component';
 import { MatchesEffects } from './redux/effects/matches.effects';
 import { MatchesListComponent } from './components/matches-list/matches-list.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SofascoreEffects } from './redux/effects/sofascore.effects';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     NgbModule,
     NgSelectModule,
     StoreModule.forRoot({ matches: matchesReducer }),
-    EffectsModule.forRoot([MatchesEffects]),
+    EffectsModule.forRoot([MatchesEffects, SofascoreEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [],

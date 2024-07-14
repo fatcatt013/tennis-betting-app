@@ -146,13 +146,20 @@
 
     <!-- Submit button -->
     <div class="row">
-      <div class="col-12 text-right">
+      <div class="col text-right">
         <button
           type="submit"
           class="btn btn-primary"
           [disabled]="matchForm.invalid"
         >
           <i class="fas fa-check"></i> Add Match
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary ms-2"
+          (click)="handleSearch()"
+        >
+          <i class="fas fa-search"></i> Search for match
         </button>
       </div>
     </div>

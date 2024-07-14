@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { newMatch } from 'src/app/redux/actions/matches.actions';
+import { searchForMatch } from 'src/app/redux/actions/sofascore.actions';
 import { IMatch } from 'src/app/redux/interfaces/matches.interfaces';
 
 @Component({
@@ -66,5 +67,14 @@ export class AddMatchComponent {
       console.log('New match!');
       this.store.dispatch(newMatch({ match: match }));
     }
+  }
+
+  handleSearch() {
+    this.store.dispatch(
+      searchForMatch({
+        p1: this.matchForm.value.playerOneName,
+        p2: this.matchForm.value.playerTwoName,
+      })
+    );
   }
 }

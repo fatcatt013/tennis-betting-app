@@ -6,6 +6,7 @@ import {
   loadMatches,
   loadMatchesSuccess,
 } from './redux/actions/matches.actions';
+import { MatchSimulator } from './services/match-simulation.service';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,32 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private updates$: Actions
+    private updates$: Actions,
+    private matchSimulator: MatchSimulator
   ) {}
 
   ngOnInit(): void {
+    // const player1ServePointsWon = [65, 68, 70, 64, 66]; // Example percentages
+    // const player2ServePointsWon = [60, 62, 59, 61, 63]; // Example percentages
+
+    // const p1Serve =
+    //   this.matchSimulator.getServeProbability(player1ServePointsWon) / 100;
+    // const p2Serve =
+    //   this.matchSimulator.getServeProbability(player2ServePointsWon) / 100;
+
+    // const numSimulations = 10000;
+    // const result = this.matchSimulator.simulateMatch(
+    //   p1Serve,
+    //   p2Serve,
+    //   numSimulations
+    // );
+    // console.log(
+    //   `Player 1 Win Probability: ${result.p1WinProbability.toFixed(2)}%`
+    // );
+    // console.log(
+    //   `Player 2 Win Probability: ${result.p2WinProbability.toFixed(2)}%`
+    // );
+
     this.store.dispatch(loadMatches());
 
     this.updates$
