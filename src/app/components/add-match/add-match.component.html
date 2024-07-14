@@ -158,6 +158,10 @@
           type="submit"
           class="btn btn-primary ms-2"
           (click)="handleSearch()"
+          [disabled]="
+            matchForm.value.playerOneName.length === 0 ||
+            matchForm.value.playerTwoName.length === 0
+          "
         >
           <i class="fas fa-search"></i> Search for match
         </button>

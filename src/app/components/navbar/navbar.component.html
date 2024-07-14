@@ -2,20 +2,20 @@
   <img
     src="assets/tennis-ball.svg"
     alt="My Happy SVG"
-    style="height: 32px; width: 32px; color: white"
+    style="height: 40px; width: 40px; color: white"
+    class="mt-3 mb-3"
   />
-  <ul class="navbar-nav mb-auto w-100 mt-2">
+  <ul class="navbar-nav mb-auto w-100">
     <li class="nav-item">
-      <a class="nav-link" href="#">Home</a>
+      <a class="nav-link" [routerLink]="'/'">Dashboard</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">About</a>
+      <a class="nav-link" [routerLink]="'/matches-overview'"
+        >Matches overview</a
+      >
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Services</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Contact</a>
+      <a class="nav-link">Settings</a>
     </li>
   </ul>
 </nav>
