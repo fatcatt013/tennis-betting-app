@@ -29,7 +29,7 @@ export class BetEntryComponent implements OnInit {
     if (this.betForm.valid) {
       this.store.dispatch(
         newMatch({
-          data: {
+          match: {
             id: Date.now().toString(),
             bets: [],
             currentSet: 1,

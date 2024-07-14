@@ -1,0 +1,78 @@
+$card-bg: #393053;
+$card-border: #18122b;
+$card-header-bg: #18122b;
+$card-header-color: #ecf0f1;
+$card-body-color: #ecf0f1;
+$card-footer-bg: #443c68;
+$card-footer-color: #ecf0f1;
+$primary-color: #635985;
+$secondary-color: #443c68;
+$text-muted-color: #95a5a6;
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #18122b;
+}
+
+.card {
+  background-color: $card-bg;
+  border: 1px solid $card-border;
+
+  .card-header {
+    background-color: $card-header-bg !important;
+    color: $card-header-color !important;
+    border-bottom: 1px solid $card-border !important;
+  }
+
+  .card-body {
+    & {
+      color: $card-body-color;
+    }
+
+    & input {
+      background-color: #635985 !important;
+      color: white !important;
+      border: $card-border !important;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      transition: #635985 5000s ease-in-out 0s !important;
+    }
+
+    & input::placeholder {
+      color: $text-muted-color;
+    }
+  }
+
+  .card-footer {
+    background-color: $card-footer-bg !important;
+    color: $card-footer-color !important;
+    border-top: 1px solid $card-border !important;
+  }
+
+  .text-muted {
+    color: $text-muted-color !important;
+  }
+
+  .btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    &:hover {
+      background-color: darken($primary-color, 10%);
+      border-color: darken($primary-color, 10%);
+    }
+  }
+
+  .btn-secondary {
+    background-color: $secondary-color;
+    border-color: $secondary-color;
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+      border-color: darken($secondary-color, 10%);
+    }
+  }
+}

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadJson, loadJsonSuccess } from './redux/actions/json.actions';
 import { Actions, ofType } from '@ngrx/effects';
 import { distinctUntilChanged } from 'rxjs';
-import { loadMatches } from './redux/actions/matches.actions';
+import {
+  loadMatches,
+  loadMatchesSuccess,
+} from './redux/actions/matches.actions';
 
 @Component({
   selector: 'app-root',
@@ -20,15 +22,15 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadJson({ url: this.matchesUrl, _type: 'matches' }));
+    this.store.dispatch(loadMatches());
 
     this.updates$
-      .pipe(ofType(loadJsonSuccess.type), distinctUntilChanged())
+      .pipe(ofType(loadMatchesSuccess.type), distinctUntilChanged())
       .subscribe((action: any) => {
         if (action._type === 'matches') {
           console.log('MATCHES DATA:');
           console.log(action.data);
-          this.store.dispatch(loadMatches({ data: action.data }));
+          this.store.dispatch(loadMatches());
         }
       });
   }

@@ -1,117 +1,152 @@
 <form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="playerOneName">Player 1 Name</label>
-    <input
-      id="playerOneName"
-      type="text"
-      formControlName="playerOneName"
-      class="form-control"
-      placeholder="Enter Player 1 Name"
-    />
-    <div
-      *ngIf="
-        playerOneName.invalid && (playerOneName.dirty || playerOneName.touched)
-      "
-      class="text-danger"
-    >
-      <div *ngIf="playerOneName.errors?.required">
-        Player 1 Name is required.
+  <div class="container">
+    <!-- Player 1 and Player 2 fields side by side -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="playerOneName">Player 1 Name</label>
+          <input
+            id="playerOneName"
+            type="text"
+            formControlName="playerOneName"
+            class="form-control"
+            placeholder="Enter Player 1 Name"
+          />
+          <div
+            *ngIf="
+              playerOneName.invalid &&
+              (playerOneName.dirty || playerOneName.touched)
+            "
+            class="text-danger"
+          >
+            <div *ngIf="playerOneName.errors?.required">
+              Player 1 Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="playerOneOdds">Player 1 Starting Odds</label>
+          <input
+            id="playerOneOdds"
+            type="number"
+            formControlName="playerOneOdds"
+            class="form-control"
+            placeholder="Enter Player 1 Starting Odds"
+          />
+          <div
+            *ngIf="
+              playerOneOdds.invalid &&
+              (playerOneOdds.dirty || playerOneOdds.touched)
+            "
+            class="text-danger"
+          >
+            <div *ngIf="playerOneOdds.errors?.required">
+              Player 1 Starting Odds are required.
+            </div>
+            <div *ngIf="playerOneOdds.errors?.min">
+              Player 1 Starting Odds must be greater than 0.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="playerTwoName">Player 2 Name</label>
+          <input
+            id="playerTwoName"
+            type="text"
+            formControlName="playerTwoName"
+            class="form-control"
+            placeholder="Enter Player 2 Name"
+          />
+          <div
+            *ngIf="
+              playerTwoName.invalid &&
+              (playerTwoName.dirty || playerTwoName.touched)
+            "
+            class="text-danger"
+          >
+            <div *ngIf="playerTwoName.errors?.required">
+              Player 2 Name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="playerTwoOdds">Player 2 Starting Odds</label>
+          <input
+            id="playerTwoOdds"
+            type="number"
+            formControlName="playerTwoOdds"
+            class="form-control"
+            placeholder="Enter Player 2 Starting Odds"
+          />
+          <div
+            *ngIf="
+              playerTwoOdds.invalid &&
+              (playerTwoOdds.dirty || playerTwoOdds.touched)
+            "
+            class="text-danger"
+          >
+            <div *ngIf="playerTwoOdds.errors?.required">
+              Player 2 Starting Odds are required.
+            </div>
+            <div *ngIf="playerTwoOdds.errors?.min">
+              Player 2 Starting Odds must be greater than 0.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date and Place fields side by side -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            id="date"
+            type="date"
+            formControlName="date"
+            class="form-control"
+            placeholder="Enter Date"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="place">Place</label>
+          <input
+            id="place"
+            type="text"
+            formControlName="place"
+            class="form-control"
+            placeholder="Enter Place"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <div class="row">
+      <div class="col-12 text-right">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="matchForm.invalid"
+        >
+          <i class="fas fa-check"></i> Add Match
+        </button>
       </div>
     </div>
   </div>
-
-  <div class="form-group">
-    <label for="playerOneOdds">Player 1 Starting Odds</label>
-    <input
-      id="playerOneOdds"
-      type="number"
-      formControlName="playerOneOdds"
-      class="form-control"
-      placeholder="Enter Player 1 Starting Odds"
-    />
-    <div
-      *ngIf="
-        playerOneOdds.invalid && (playerOneOdds.dirty || playerOneOdds.touched)
-      "
-      class="text-danger"
-    >
-      <div *ngIf="playerOneOdds.errors?.required">
-        Player 1 Starting Odds are required.
-      </div>
-      <div *ngIf="playerOneOdds.errors?.min">
-        Player 1 Starting Odds must be greater than 0.
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="playerTwoName">Player 2 Name</label>
-    <input
-      id="playerTwoName"
-      type="text"
-      formControlName="playerTwoName"
-      class="form-control"
-      placeholder="Enter Player 2 Name"
-    />
-    <div
-      *ngIf="
-        playerTwoName.invalid && (playerTwoName.dirty || playerTwoName.touched)
-      "
-      class="text-danger"
-    >
-      <div *ngIf="playerTwoName.errors?.required">
-        Player 2 Name is required.
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="playerTwoOdds">Player 2 Starting Odds</label>
-    <input
-      id="playerTwoOdds"
-      type="number"
-      formControlName="playerTwoOdds"
-      class="form-control"
-      placeholder="Enter Player 2 Starting Odds"
-    />
-    <div
-      *ngIf="
-        playerTwoOdds.invalid && (playerTwoOdds.dirty || playerTwoOdds.touched)
-      "
-      class="text-danger"
-    >
-      <div *ngIf="playerTwoOdds.errors?.required">
-        Player 2 Starting Odds are required.
-      </div>
-      <div *ngIf="playerTwoOdds.errors?.min">
-        Player 2 Starting Odds must be greater than 0.
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="date">Date</label>
-    <input
-      id="date"
-      type="date"
-      formControlName="date"
-      class="form-control"
-      placeholder="Enter Date"
-    />
-  </div>
-
-  <div class="form-group">
-    <label for="place">Place</label>
-    <input
-      id="place"
-      type="text"
-      formControlName="place"
-      class="form-control"
-      placeholder="Enter Place"
-    />
-  </div>
-
-  <button type="submit" class="btn btn-primary" [disabled]="matchForm.invalid">
-    <i class="fas fa-check"></i> Add Match
-  </button>
 </form>

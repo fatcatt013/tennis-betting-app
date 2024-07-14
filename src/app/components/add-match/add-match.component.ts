@@ -64,7 +64,7 @@ export class AddMatchComponent {
       };
 
       console.log('New match!');
-      this.store.dispatch(newMatch({ data: match }));
+      this.store.dispatch(newMatch({ match: match }));
     }
   }
 }

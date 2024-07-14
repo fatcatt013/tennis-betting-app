@@ -14,11 +14,10 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
-import { jsonReducer } from './redux/reducers/json.reducer';
-import { JsonEffects } from './redux/effects/json.effects';
 import { matchesReducer } from './redux/reducers/matches.reducer';
 import { AddMatchComponent } from './components/add-match/add-match.component';
 import { MatchesEffects } from './redux/effects/matches.effects';
+import { MatchesListComponent } from './components/matches-list/matches-list.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +26,7 @@ import { MatchesEffects } from './redux/effects/matches.effects';
     BetEntryComponent,
     BetListComponent,
     AddMatchComponent,
+    MatchesListComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,8 +36,8 @@ import { MatchesEffects } from './redux/effects/matches.effects';
     HttpClientModule,
     NgbModule,
     NgSelectModule,
-    StoreModule.forRoot({ json: jsonReducer, matches: matchesReducer }),
-    EffectsModule.forRoot([MatchesEffects, JsonEffects]),
+    StoreModule.forRoot({ matches: matchesReducer }),
+    EffectsModule.forRoot([MatchesEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [],
