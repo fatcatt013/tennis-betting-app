@@ -1,10 +1,45 @@
-$card-bg: #393053;
-$card-border: #18122b;
-$card-header-bg: #18122b;
-$card-header-color: #ecf0f1;
-$card-body-color: #ecf0f1;
-$card-footer-bg: #443c68;
-$card-footer-color: #ecf0f1;
-$primary-color: #635985;
-$secondary-color: #443c68;
-$text-muted-color: #95a5a6;
+// Base Colors
+$background-color: #121212; // Dark theme background
+$surface-color: #1e1e1e; // Surface color for elements like cards
+$error-color: #cf6679; // Error color as per Material Design guidelines
+$body-bg: #18122b;
+
+// Text Colors
+$text-primary-color: darken(#ffffff, 20%); // Primary text color
+$text-secondary-color: #b0bec5; // Secondary text color for less emphasis
+$text-disabled-color: #616161; // Disabled text color
+
+// Card Variables
+$card-bg: $surface-color;
+$card-border: #2c2c2c;
+$card-header-bg: $surface-color;
+$card-header-color: $text-primary-color;
+$card-body-color: $text-primary-color;
+$card-footer-bg: $surface-color;
+$card-footer-color: $text-secondary-color;
+
+// Table Variables
+$table-bg: $surface-color;
+$table-text-color: $text-primary-color;
+$table-header-bg: #242424; // Slightly lighter than the background for distinction
+$table-header-text-color: $text-primary-color;
+$table-border: #2c2c2c;
+$positive-bg: darken(
+  #00c853,
+  20%
+); // Material Design green for positive feedback
+$negative-bg: darken(#d32f2f, 20%); // Material Design red for negative feedback
+$negative-text-color: $text-primary-color;
+
+// Button Colors
+$primary-color: #bb86fc; // Material Design purple
+$secondary-color: #03dac6; // Material Design teal
+
+// Miscellaneous
+$text-muted-color: $text-secondary-color;
+$input-bg: #2c2c2c; // Background color for inputs
+$body-bg: $background-color;
+
+// Score Variables
+$score-font-size: 1.5rem; /* Adjust size as needed */
+$score-font-weight: bold;

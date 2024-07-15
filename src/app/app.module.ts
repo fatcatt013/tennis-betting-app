@@ -22,7 +22,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SofascoreEffects } from './redux/effects/sofascore.effects';
 import { MatchesOverviewComponent } from './components/matches-overview/matches-overview.component';
 import { BetDetailsComponent } from './components/bet-details/bet-details.component';
-import { BetDetailsTableComponent } from './components/bet-details-table/bet-details-table.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatchOutcomesTableComponent } from './components/match-outcomes-table/match-outcomes-table.component';
 
@@ -37,7 +36,6 @@ import { MatchOutcomesTableComponent } from './components/match-outcomes-table/m
     NavbarComponent,
     MatchesOverviewComponent,
     BetDetailsComponent,
-    BetDetailsTableComponent,
     MatchOutcomesTableComponent,
   ],
   imports: [

@@ -1,9 +1,11 @@
+@import '../../../theme-variables.scss';
+
 .card {
   margin-bottom: 1rem;
 }
 
 .card-header {
-  background-color: #f8f9fa;
+  background-color: $card-header-bg;
 }
 
 .card-body {
@@ -11,9 +13,10 @@
 }
 
 .card-footer {
-  background-color: #f8f9fa;
+  background-color: $card-footer-bg;
 }
+
 .score {
-  font-size: 1.5rem; /* Adjust size as needed */
-  font-weight: bold;
+  font-size: $score-font-size;
+  font-weight: $score-font-weight;
 }

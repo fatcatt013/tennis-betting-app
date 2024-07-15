@@ -1,24 +1,29 @@
+@import '../../../theme-variables.scss';
+
 .custom-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #393053;
-  color: #ecf0f1;
+  background-color: $table-bg;
+  color: $table-text-color;
+
   thead {
-    background-color: #18122b;
-    color: #ecf0f1;
+    background-color: $table-header-bg;
+    color: $table-header-text-color;
   }
+
   tbody {
     tr.positive {
-      background-color: green;
+      background-color: $positive-bg;
     }
     tr.negative {
-      background-color: darkred;
-      color: black;
+      background-color: $negative-bg;
+      color: $negative-text-color;
     }
   }
+
   th,
   td {
     padding: 10px;
-    border: 1px solid #18122b;
+    border: 1px solid $table-border;
   }
 }

@@ -1,23 +1,23 @@
 @import '../../../theme-variables.scss';
 
 .nav-tabs .nav-link.active {
-  background-color: $primary-color;
-  color: #fff;
+  background-color: lighten($surface-color, 10%);
+  color: $text-primary-color;
 }
 
 .nav-tabs .nav-link {
   color: $secondary-color;
-  color: #fff;
+  color: $text-primary-color;
 }
 
 .tab-content {
   border: 1px solid #dee2e6;
   padding: 1rem;
-  background-color: $primary-color;
+  background-color: lighten($surface-color, 10%);
 }
 
 .team-card {
-  background-color: $primary-color;
+  background-color: lighten($surface-color, 10%);
   border: 1px solid #dee2e6;
   padding: 1rem;
   border-radius: 0.25rem;
