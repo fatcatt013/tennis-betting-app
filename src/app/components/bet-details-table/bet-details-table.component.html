@@ -1,0 +1,13 @@
+<div *ngIf="results?.length">
+  <ngx-datatable
+    class="bootstrap"
+    [rows]="results"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rowClass]="getRowClass"
+  >
+  </ngx-datatable>
+</div>

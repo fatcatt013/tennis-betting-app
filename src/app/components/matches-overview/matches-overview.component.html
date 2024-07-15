@@ -46,18 +46,12 @@
                   ><h5>Match Details</h5>
                   <div class="row">
                     <div class="col-12 mb-3">
-                      <h6>General Information</h6>
-                      <p><strong>ID:</strong> {{ highlightedMatch.id }}</p>
+                      <h6>Tournament</h6>
                       <p>
-                        <strong>Status:</strong>
-                        {{ sofascoreData.match.status.description }}
-                      </p>
-                      <p>
-                        <strong>Winner Code:</strong>
-                        {{ sofascoreData.match.winnerCode }}
+                        <strong>Name:</strong>
+                        {{ sofascoreData.match.tournament.name }}
                       </p>
                     </div>
-
                     <div class="col-12 mb-3">
                       <h6>Teams</h6>
                       <div class="d-flex justify-content-between">
@@ -170,16 +164,8 @@
                         }}
                       </p>
                     </div> -->
-
-                    <div class="col-12 mb-3">
-                      <h6>Tournament</h6>
-                      <p>
-                        <strong>Name:</strong>
-                        {{ sofascoreData.match.tournament.name }}
-                      </p>
-                    </div>
                   </div>
-                  <h5>Match Details</h5>
+                  <h5>My bets</h5>
                   <app-bet-details [match]="highlightedMatch"></app-bet-details>
                 </ng-container>
               </ng-container>

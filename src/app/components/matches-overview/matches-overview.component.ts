@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged, Observable } from 'rxjs';
-import { MatchesService } from 'src/app/matches.service';
+import { MatchesService } from 'src/app/services/matches.service';
 import {
   searchForMatch,
   searchForMatchSuccess,

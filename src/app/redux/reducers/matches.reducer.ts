@@ -22,6 +22,7 @@ export const matchesReducer = createReducer(
   on(loadMatchesSuccess, (_, { matches }) => ({
     ..._,
     matches: matches,
+    highlightedMatches: matches.filter((match) => match.bets.length),
   })),
   on(newMatchSuccess, (_, { matches }) => ({
     ..._,

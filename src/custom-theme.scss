@@ -259,3 +259,52 @@ body {
     }
   }
 }
+
+.ngx-datatable.bootstrap {
+  .datatable-header {
+    background-color: $card-header-bg;
+    color: $card-header-color;
+    border-bottom: 1px solid $card-border;
+  }
+
+  .datatable-body {
+    background-color: $card-bg;
+    color: $card-body-color;
+
+    .datatable-row-wrapper {
+      border-bottom: 1px solid $card-border;
+    }
+
+    .datatable-row-center.datatable-row-group {
+      background-color: $primary-color;
+      color: $card-body-color;
+    }
+  }
+
+  .datatable-footer {
+    background-color: $card-footer-bg;
+    color: $card-footer-color;
+  }
+
+  .datatable-header-cell {
+    background-color: $card-header-bg;
+    color: $card-header-color;
+    border-right: 1px solid $card-border;
+  }
+
+  .datatable-row-group-header {
+    background-color: $secondary-color;
+    color: $card-body-color;
+    font-weight: bold;
+  }
+
+  .win-row {
+    background-color: lighten($primary-color, 20%);
+    color: $card-body-color;
+  }
+
+  .loss-row {
+    background-color: lighten($secondary-color, 20%);
+    color: $card-body-color;
+  }
+}

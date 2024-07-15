@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { MatchesService } from 'src/app/matches.service';
+import { MatchesService } from 'src/app/services/matches.service';
 import { EBetType, IBetType } from 'src/app/models/bet';
 import { editMatch, newMatch } from 'src/app/redux/actions/matches.actions';
 import { IMatch } from 'src/app/redux/interfaces/matches.interfaces';
