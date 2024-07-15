@@ -1,0 +1,24 @@
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #393053;
+  color: #ecf0f1;
+  thead {
+    background-color: #18122b;
+    color: #ecf0f1;
+  }
+  tbody {
+    tr.positive {
+      background-color: green;
+    }
+    tr.negative {
+      background-color: darkred;
+      color: black;
+    }
+  }
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid #18122b;
+  }
+}

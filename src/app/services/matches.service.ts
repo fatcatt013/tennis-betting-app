@@ -101,4 +101,96 @@ export class MatchesService {
 
     return results;
   }
+
+  calculatePotentialOutcomes(match: IMatch) {
+    let P1 = match.playerOne.name.split(' ')[1];
+    let P2 = match.playerTwo.name.split(' ')[1];
+
+    const outcomes = [
+      // Player 1 wins scenarios
+      { sets: `${P1} wins 1. set, ${P1} wins 2. set`, p1: true, p2: false },
+      {
+        sets: `${P1} wins 1. set, ${P2} wins 2. set, ${P1} wins 3. set`,
+        p1: true,
+        p2: false,
+      },
+      {
+        sets: `${P2} wins 1. set, ${P1} wins 2. set, ${P1} wins 3. set`,
+        p1: true,
+        p2: false,
+      },
+      // Player 2 wins scenarios
+      { sets: `${P2} wins 1. set, ${P2} wins 2. set`, p1: false, p2: true },
+      {
+        sets: `${P2} wins 1. set, ${P1} wins 2. set, ${P2} wins 3. set`,
+        p1: false,
+        p2: true,
+      },
+      {
+        sets: `${P1} wins 1. set, ${P2} wins 2. set, ${P2} wins 3. set`,
+        p1: false,
+        p2: true,
+      },
+    ];
+
+    return outcomes.map((outcome) => {
+      let profit = 0;
+
+      match.bets.forEach((bet) => {
+        const { player, type, amount, odds } = bet;
+
+        if (type === EBetType.MATCH_WIN) {
+          if (
+            (player.name === match.playerOne.name && outcome.p1) ||
+            (player.name === match.playerTwo.name && outcome.p2)
+          ) {
+            profit += amount * odds - amount;
+          } else {
+            profit -= amount;
+          }
+        } else if (
+          type === EBetType.FIRST_SET_WIN &&
+          outcome.sets.includes('1. set')
+        ) {
+          if (
+            (player.name === match.playerOne.name &&
+              outcome.sets.startsWith(`${P1}`)) ||
+            (player.name === match.playerTwo.name &&
+              outcome.sets.startsWith(`${P2}`))
+          ) {
+            profit += amount * odds - amount;
+          } else {
+            profit -= amount;
+          }
+        } else if (
+          type === EBetType.SECOND_SET_WIN &&
+          outcome.sets.includes('2. set')
+        ) {
+          const secondSetOutcome = outcome.sets
+            .split(', ')[1]
+            .startsWith(`${P1}`);
+          if (
+            (player.name === match.playerOne.name && secondSetOutcome) ||
+            (player.name === match.playerTwo.name && !secondSetOutcome)
+          ) {
+            profit += amount * odds - amount;
+          } else {
+            profit -= amount;
+          }
+        }
+      });
+
+      return {
+        outcome: outcome.sets,
+        profit,
+      };
+    });
+  }
+
+  formatOutcomeSets(outcome: string, match: IMatch): string {
+    return outcome
+      .replace(/wins \d+\. set/g, '')
+      .replace(/,\s+/g, ', ')
+      .trim();
+  }
 }

@@ -24,6 +24,7 @@ import { MatchesOverviewComponent } from './components/matches-overview/matches-
 import { BetDetailsComponent } from './components/bet-details/bet-details.component';
 import { BetDetailsTableComponent } from './components/bet-details-table/bet-details-table.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MatchOutcomesTableComponent } from './components/match-outcomes-table/match-outcomes-table.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     MatchesOverviewComponent,
     BetDetailsComponent,
     BetDetailsTableComponent,
+    MatchOutcomesTableComponent,
   ],
   imports: [
     BrowserModule,

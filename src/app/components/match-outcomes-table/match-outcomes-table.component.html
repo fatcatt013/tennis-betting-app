@@ -1,0 +1,23 @@
+<div *ngIf="results?.length">
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Player One</th>
+        <th>Player Two</th>
+        <th>Sets</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let row of results"
+        [ngClass]="{ positive: row.profit > 0, negative: row.profit < 0 }"
+      >
+        <td>{{ row.playerOne }}</td>
+        <td>{{ row.playerTwo }}</td>
+        <td>{{ row.sets }}</td>
+        <td>{{ row.profit | currency: 'CZK' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
