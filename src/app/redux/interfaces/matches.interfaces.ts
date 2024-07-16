@@ -4,6 +4,7 @@ export interface IPLayer {
   startingOdds: number;
   name: string;
   photo?: string;
+  elo?: number;
 }
 
 export interface IMatch {

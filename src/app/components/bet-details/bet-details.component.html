@@ -1,5 +1,10 @@
 <div class="my-5">
   <app-match-outcomes-table [matches]="[match]"></app-match-outcomes-table>
+  <div>
+    <p>
+      Expected value: <strong>{{ this.expectedValue }}</strong>
+    </p>
+  </div>
 </div>
 <div *ngIf="match?.bets?.length">
   <div *ngFor="let bet of match.bets" class="bet-card">

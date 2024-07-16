@@ -42,6 +42,12 @@
                   let sofascoreData
                 "
               >
+                <button
+                  class="btn btn-primary"
+                  (click)="handleFetchElo(highlightedMatch)"
+                >
+                  FETCH ELO
+                </button>
                 <ng-container *ngIf="sofascoreData.match"
                   ><h5>Match Details</h5>
                   <div class="row">
@@ -73,6 +79,10 @@
                             <strong>Ranking:</strong>
                             {{ sofascoreData.match.homeTeam.ranking }}
                           </p>
+                          <p *ngIf="highlightedMatch.playerOne.elo">
+                            <strong>Elo:</strong>
+                            {{ highlightedMatch.playerOne.elo }}
+                          </p>
                         </div>
                         <div class="team-card">
                           <h6>Away Team</h6>
@@ -91,6 +101,10 @@
                           <p>
                             <strong>Ranking:</strong>
                             {{ sofascoreData.match.awayTeam.ranking }}
+                          </p>
+                          <p *ngIf="highlightedMatch.playerTwo.elo">
+                            <strong>Elo:</strong>
+                            {{ highlightedMatch.playerTwo.elo }}
                           </p>
                         </div>
                       </div>
@@ -165,7 +179,9 @@
                       </p>
                     </div> -->
                   </div>
+
                   <h5>My bets</h5>
+
                   <app-bet-details [match]="highlightedMatch"></app-bet-details>
                 </ng-container>
               </ng-container>

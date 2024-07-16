@@ -10,6 +10,8 @@ import {
 import { IMatch } from 'src/app/redux/interfaces/matches.interfaces';
 import { ISofaScoreEvent } from 'src/app/redux/interfaces/sofascore.interfaces';
 import { selectHighlightedMatches } from 'src/app/redux/selectors/matches.selectors';
+import { ApiService } from 'src/app/services/api.service';
+import { fetchElo } from 'src/app/redux/actions/matches.actions';
 
 @Component({
   selector: 'app-matches-overview',
@@ -23,11 +25,13 @@ export class MatchesOverviewComponent implements OnInit {
   matchesData: { [i: string]: ISofaScoreEvent | null } = {};
   selectedTab: number = 0;
   loading = true;
+  expectedValue = 0;
 
   constructor(
     public matchesService: MatchesService,
     private store: Store,
-    private updates$: Actions
+    private updates$: Actions,
+    private api: ApiService
   ) {}
 
   ngOnInit() {
@@ -43,7 +47,6 @@ export class MatchesOverviewComponent implements OnInit {
         );
       });
     });
-
     this.updates$
       .pipe(ofType(searchForMatchSuccess))
       .subscribe(({ match, id }) => {
@@ -66,5 +69,9 @@ export class MatchesOverviewComponent implements OnInit {
 
   selectTab(index: number): void {
     this.selectedTab = index;
+  }
+
+  handleFetchElo(match: IMatch) {
+    this.store.dispatch(fetchElo({ match }));
   }
 }

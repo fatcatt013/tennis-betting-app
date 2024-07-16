@@ -25,6 +25,7 @@ export class ApiService {
   constructor(private readonly _httpClient: HttpClient) {}
 
   public get<T>(path: string, options?: ApiRequestOptions): Observable<T> {
+    console.log('GET CALLED');
     let requestHeaders = this.DEFAULT_HEADERS;
     let requestOptions = {};
 
@@ -36,6 +37,7 @@ export class ApiService {
       requestOptions = { ...options };
     }
 
+    console.log(`${this._baseUrl}${path}`);
     return this._httpClient.get<T>(`${this._baseUrl}${path}`, {
       observe: 'body',
       responseType: 'json',

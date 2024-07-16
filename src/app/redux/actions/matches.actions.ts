@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IMatch } from '../interfaces/matches.interfaces';
+import { IMatch, IPLayer } from '../interfaces/matches.interfaces';
 
 export const loadMatches = createAction('[Matches] Load matches');
 
@@ -56,4 +56,19 @@ export const highlightMatch = createAction(
 export const unhighlightMatch = createAction(
   '[Matches] Unhighlight match',
   props<{ id: string }>()
+);
+
+export const fetchElo = createAction(
+  '[Matches] Fetch ELO',
+  props<{ match: IMatch }>()
+);
+
+export const fetchEloSuccess = createAction(
+  '[Matches] Fetch ELO success',
+  props<{ matchId: string; player1: IPLayer; player2: IPLayer }>()
+);
+
+export const fetchEloFailure = createAction(
+  '[Matches] Fetch ELO failure',
+  props<{ err: any }>()
 );

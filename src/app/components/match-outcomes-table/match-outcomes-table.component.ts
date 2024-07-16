@@ -26,7 +26,7 @@ export class MatchOutcomesTableComponent {
         matchId: match.id,
         playerOne: match.playerOne.name,
         playerTwo: match.playerTwo.name,
-        sets: this.matchesService.formatOutcomeSets(outcome.outcome, match),
+        sets: this.matchesService.formatOutcomeSets(outcome.outcome),
         profit: outcome.profit,
       };
     });

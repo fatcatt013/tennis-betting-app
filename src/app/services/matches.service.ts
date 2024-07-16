@@ -7,7 +7,7 @@ import {
   highlightMatch,
   unhighlightMatch,
 } from '../redux/actions/matches.actions';
-import { EBetType } from '../models/bet';
+import { EBetType, IBet } from '../models/bet';
 
 @Injectable({
   providedIn: 'root',
@@ -187,10 +187,69 @@ export class MatchesService {
     });
   }
 
-  formatOutcomeSets(outcome: string, match: IMatch): string {
+  formatOutcomeSets(outcome: string): string {
     return outcome
       .replace(/wins \d+\. set/g, '')
       .replace(/,\s+/g, ', ')
       .trim();
+  }
+
+  calculateExpectedValue(match: IMatch): number {
+    let totalEV = 0;
+
+    // Define probabilities for outcomes (these should be based on real data/analysis)
+    const probabilities = this.calculateProbabilities(match);
+
+    for (const bet of match.bets) {
+      const outcome = this.determineOutcome(bet, probabilities);
+      const winAmount = bet.odds * bet.amount - bet.amount; // Net profit if the bet wins
+      const loseAmount = -bet.amount; // Loss if the bet loses
+
+      const betEV = outcome.pWin * winAmount + outcome.pLose * loseAmount;
+      totalEV += betEV;
+    }
+
+    return totalEV;
+  }
+
+  calculateProbabilities(match: IMatch): { [key: string]: number } {
+    // Example probabilities; these should be based on real analysis
+    return {
+      Player1_Wins_Match: 0.498,
+      Player2_Wins_Match: 0.571,
+      Player1_Wins_First_Set: 0.498,
+      Player2_Wins_First_Set: 0.571,
+      // Add other probabilities as needed
+    };
+  }
+
+  determineOutcome(
+    bet: IBet,
+    probabilities: { [key: string]: number }
+  ): { pWin: number; pLose: number } {
+    let pWin: number;
+    switch (bet.type) {
+      case EBetType.MATCH_WIN:
+        pWin =
+          bet.player.name === 'Player 1'
+            ? probabilities['Player1_Wins_Match']
+            : probabilities['Player2_Wins_Match'];
+        break;
+      case EBetType.FIRST_SET_WIN:
+        pWin =
+          bet.player.name === 'Player 1'
+            ? probabilities['Player1_Wins_First_Set']
+            : probabilities['Player2_Wins_First_Set'];
+        break;
+      // Add other bet types as needed
+      default:
+        pWin = 0;
+    }
+    return { pWin, pLose: 1 - pWin };
+  }
+
+  // A helper function to calculate implied probability from odds
+  calculateProbability(odds: number): number {
+    return 1 / odds;
   }
 }
