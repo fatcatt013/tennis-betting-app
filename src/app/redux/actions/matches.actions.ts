@@ -33,6 +33,16 @@ export const deleteMatch = createAction(
   props<{ id: string }>()
 );
 
+export const deleteMatchSuccess = createAction(
+  '[Matches] Delete match success',
+  props<{ data: IMatch[] }>()
+);
+
+export const deleteMatchFailure = createAction(
+  '[Matches] Delete match failure',
+  props<{ error: any }>()
+);
+
 export const editMatch = createAction(
   '[Matches] Edit match',
   props<{ id: string; data: IMatch }>()

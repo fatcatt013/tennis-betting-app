@@ -9,6 +9,9 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import {
+  deleteMatch,
+  deleteMatchFailure,
+  deleteMatchSuccess,
   editMatch,
   editMatchFailure,
   editMatchSuccess,
@@ -30,12 +33,15 @@ import {
 import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { IMatch, IPLayer } from '../interfaces/matches.interfaces';
+import { ToastrService } from 'ngx-toastr';
+
 @Injectable()
 export class MatchesEffects {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private api: ApiService
+    private api: ApiService,
+    private toastr: ToastrService
   ) {}
 
   loadMatches$ = createEffect(() =>
@@ -48,6 +54,28 @@ export class MatchesEffects {
         );
       })
     )
+  );
+
+  loadMatchesSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loadMatchesSuccess),
+        tap(() => {
+          this.toastr.success('Matches loaded successfully');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  loadMatchesFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loadMatchesFailure),
+        tap(() => {
+          this.toastr.error('Failed to load matches');
+        })
+      ),
+    { dispatch: false }
   );
 
   newMatch$ = createEffect(() =>
@@ -66,6 +94,28 @@ export class MatchesEffects {
     )
   );
 
+  newMatchSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(newMatchSuccess),
+        tap(() => {
+          this.toastr.success('New match added successfully');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  newMatchFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(newMatchFailure),
+        tap(() => {
+          this.toastr.error('Failed to add new match');
+        })
+      ),
+    { dispatch: false }
+  );
+
   editMatch$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editMatch),
@@ -82,13 +132,26 @@ export class MatchesEffects {
     )
   );
 
-  editMatchSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(editMatchSuccess),
-      switchMap(() => {
-        return [loadMatches()];
-      })
-    )
+  editMatchSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(editMatchSuccess),
+        tap(() => {
+          this.toastr.success('Match edited successfully');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  editMatchFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(editMatchFailure),
+        tap(() => {
+          this.toastr.error('Failed to edit match');
+        })
+      ),
+    { dispatch: false }
   );
 
   fetchElo$ = createEffect(() =>
@@ -139,7 +202,60 @@ export class MatchesEffects {
             },
           }),
         ];
+      }),
+      tap(() => {
+        this.toastr.success('Elo fetched and match updated successfully');
       })
     )
+  );
+
+  fetchEloFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fetchEloFailure),
+        tap(() => {
+          this.toastr.error('Failed to fetch Elo');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteMatch$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteMatch),
+      mergeMap(({ id }) => {
+        return this.api
+          .delete<{ matches: IMatch[] }>(`/data/matches/${id}`)
+          .pipe(
+            map((res: { matches: IMatch[] }) =>
+              deleteMatchSuccess({ data: res.matches })
+            ),
+            catchError((err: any) => of(deleteMatchFailure({ error: err })))
+          );
+      })
+    )
+  );
+
+  deleteMatchSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteMatchSuccess),
+      switchMap(() => {
+        return [loadMatches()];
+      }),
+      tap(() => {
+        this.toastr.success('Match deleted successfully');
+      })
+    )
+  );
+
+  deleteMatchFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteMatchFailure),
+        tap(() => {
+          this.toastr.error('Failed to delete match');
+        })
+      ),
+    { dispatch: false }
   );
 }

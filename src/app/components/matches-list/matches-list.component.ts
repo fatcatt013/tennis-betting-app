@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MatchesService } from 'src/app/services/matches.service';
-import { highlightMatch } from 'src/app/redux/actions/matches.actions';
+import {
+  deleteMatch,
+  highlightMatch,
+} from 'src/app/redux/actions/matches.actions';
 import { IMatch } from 'src/app/redux/interfaces/matches.interfaces';
 import {
   selectHighlightedMatches,
@@ -26,4 +29,8 @@ export class MatchesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  handleDeleteMatch(id: string) {
+    this.store.dispatch(deleteMatch({ id }));
+  }
 }

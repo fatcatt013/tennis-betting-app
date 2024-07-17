@@ -50,10 +50,12 @@ export class AddMatchComponent {
         playerOne: {
           startingOdds: this.matchForm.value.playerOneOdds,
           name: this.matchForm.value.playerOneName,
+          sofascoreId: null,
         },
         playerTwo: {
           startingOdds: this.matchForm.value.playerTwoOdds,
           name: this.matchForm.value.playerTwoName,
+          sofascoreId: null,
         },
         bets: [],
         currentSet: 1,

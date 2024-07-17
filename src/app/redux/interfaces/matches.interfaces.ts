@@ -5,6 +5,7 @@ export interface IPLayer {
   name: string;
   photo?: string;
   elo?: number;
+  sofascoreId: number | null;
 }
 
 export interface IMatch {

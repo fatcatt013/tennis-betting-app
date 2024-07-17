@@ -6,6 +6,7 @@ import {
   newMatchSuccess,
   unhighlightMatch,
 } from '../actions/matches.actions';
+import { searchForMatchSuccess } from '../actions/sofascore.actions';
 
 export interface MatchesState {
   matches: IMatch[];
@@ -42,5 +43,38 @@ export const matchesReducer = createReducer(
     highlightedMatches: state.highlightedMatches.filter(
       (match) => match.id !== id
     ),
-  }))
+  })),
+  on(searchForMatchSuccess, (state, { match, id }) => {
+    let searchedMatch = state.matches.find((m) => m.id === id) as IMatch;
+    let playerIds: { p1: number; p2: number } = {
+      p1: match.homeTeam.id,
+      p2: match.awayTeam.id,
+    };
+
+    console.log(playerIds);
+
+    return {
+      ...state,
+      matches: [
+        ...state.matches.filter((m) => {
+          m.id !== id;
+        }),
+        {
+          ...searchedMatch,
+          playerOne: { ...searchedMatch.playerOne, sofascoreId: playerIds.p1 },
+          playerTwo: { ...searchedMatch.playerTwo, sofascoreId: playerIds.p2 },
+        },
+      ],
+      highlightedMatches: [
+        ...state.highlightedMatches.filter((m) => {
+          m.id !== id;
+        }),
+        {
+          ...searchedMatch,
+          playerOne: { ...searchedMatch.playerOne, sofascoreId: playerIds.p1 },
+          playerTwo: { ...searchedMatch.playerTwo, sofascoreId: playerIds.p2 },
+        },
+      ],
+    };
+  })
 );

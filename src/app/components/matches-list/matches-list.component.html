@@ -76,7 +76,9 @@
                   Unhighlight
                 </button>
                 <button ngbDropdownItem>Edit</button>
-                <button ngbDropdownItem>Delete</button>
+                <button ngbDropdownItem (click)="handleDeleteMatch(match.id)">
+                  Delete
+                </button>
               </div>
             </div>
           </div>

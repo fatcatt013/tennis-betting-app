@@ -1,6 +1,12 @@
+import { Injectable } from '@angular/core';
 import { IMatch, IPLayer } from '../redux/interfaces/matches.interfaces';
 
-class TennisProbabilityCalculator {
+@Injectable({
+  providedIn: 'root',
+})
+export class TennisProbabilityCalculatorService {
+  constructor() {}
+
   // Method to calculate probabilities for a match
   calculateProbabilities(match: IMatch): { [key: string]: number } {
     const playerOneElo = match.playerOne.elo as number;
@@ -33,12 +39,6 @@ class TennisProbabilityCalculator {
       Player2_Wins_First_Set: adjustedProbabilities.playerTwoFirstSetWin,
       // Add other probabilities as needed
     };
-  }
-
-  // Helper method to get ELO rating for a player
-  private getEloRating(player: IPLayer): number {
-    // Implement logic to fetch or calculate ELO rating for the player
-    return 1500; // Example ELO rating
   }
 
   // Helper method to get recent form for a player

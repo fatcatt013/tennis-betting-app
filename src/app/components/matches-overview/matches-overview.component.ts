@@ -27,6 +27,8 @@ export class MatchesOverviewComponent implements OnInit {
   loading = true;
   expectedValue = 0;
 
+  sofascoreDataLoaded = false;
+
   constructor(
     public matchesService: MatchesService,
     private store: Store,
@@ -36,16 +38,21 @@ export class MatchesOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.highlightedMatches$.pipe(distinctUntilChanged()).subscribe((hMs) => {
-      hMs.map((hM) => {
-        this.matchesData[hM.id] = null;
-        this.store.dispatch(
-          searchForMatch({
-            p1: hM.playerOne.name,
-            p2: hM.playerTwo.name,
-            id: hM.id,
-          })
-        );
-      });
+      if (!this.sofascoreDataLoaded) {
+        hMs.map((hM) => {
+          console.log('Fetch match data');
+          this.matchesData[hM.id] = null;
+          this.store.dispatch(
+            searchForMatch({
+              p1: hM.playerOne.name,
+              p2: hM.playerTwo.name,
+              id: hM.id,
+            })
+          );
+        });
+      }
+
+      this.sofascoreDataLoaded = true;
     });
     this.updates$
       .pipe(ofType(searchForMatchSuccess))
@@ -53,9 +60,6 @@ export class MatchesOverviewComponent implements OnInit {
         if (id) {
           this.matchesData[id] = match;
         }
-
-        console.log('Finished' + id);
-        console.log(match);
 
         if (
           !Object.values(this.matchesData).some((match) => {

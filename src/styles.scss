@@ -4,7 +4,7 @@
 @use '../node_modules/@swimlane/ngx-datatable/assets/icons.css';
 
 @import './theme-variables.scss';
-
+@import 'ngx-toastr/toastr';
 .form-group {
   margin-bottom: 1rem;
 }

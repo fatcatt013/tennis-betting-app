@@ -24,7 +24,8 @@ import { MatchesOverviewComponent } from './components/matches-overview/matches-
 import { BetDetailsComponent } from './components/bet-details/bet-details.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatchOutcomesTableComponent } from './components/match-outcomes-table/match-outcomes-table.component';
-
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { MatchOutcomesTableComponent } from './components/match-outcomes-table/m
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -50,6 +52,7 @@ import { MatchOutcomesTableComponent } from './components/match-outcomes-table/m
     EffectsModule.forRoot([MatchesEffects, SofascoreEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     NgxDatatableModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
