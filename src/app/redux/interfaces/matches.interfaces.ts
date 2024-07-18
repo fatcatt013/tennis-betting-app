@@ -1,4 +1,8 @@
 import { IBet } from 'src/app/models/bet';
+import {
+  ISofaScorePlayerData,
+  ISofaScorePlayerPerformance,
+} from './sofascore.interfaces';
 
 export interface IPLayer {
   startingOdds: number;
@@ -6,6 +10,7 @@ export interface IPLayer {
   photo?: string;
   elo?: number;
   sofascoreId: number | null;
+  playerData?: ISofaScorePlayerPerformance;
 }
 
 export interface IMatch {
@@ -20,4 +25,5 @@ export interface IMatch {
   potentialBets?: IBet[];
   date?: string;
   place?: string;
+  groundType?: string;
 }

@@ -6,7 +6,10 @@ import {
   newMatchSuccess,
   unhighlightMatch,
 } from '../actions/matches.actions';
-import { searchForMatchSuccess } from '../actions/sofascore.actions';
+import {
+  searchForMatchSuccess,
+  searchForPlayerDataSuccess,
+} from '../actions/sofascore.actions';
 
 export interface MatchesState {
   matches: IMatch[];
@@ -50,9 +53,6 @@ export const matchesReducer = createReducer(
       p1: match.homeTeam.id,
       p2: match.awayTeam.id,
     };
-
-    console.log(playerIds);
-
     return {
       ...state,
       matches: [
@@ -63,6 +63,9 @@ export const matchesReducer = createReducer(
           ...searchedMatch,
           playerOne: { ...searchedMatch.playerOne, sofascoreId: playerIds.p1 },
           playerTwo: { ...searchedMatch.playerTwo, sofascoreId: playerIds.p2 },
+          groundType: match.groundType
+            ? match.groundType
+            : searchedMatch.groundType,
         },
       ],
       highlightedMatches: [
@@ -73,7 +76,41 @@ export const matchesReducer = createReducer(
           ...searchedMatch,
           playerOne: { ...searchedMatch.playerOne, sofascoreId: playerIds.p1 },
           playerTwo: { ...searchedMatch.playerTwo, sofascoreId: playerIds.p2 },
+          groundType: match.groundType
+            ? match.groundType
+            : searchedMatch.groundType,
         },
+      ],
+    };
+  }),
+  on(searchForPlayerDataSuccess, (state, { matchInfo, playerPerformance }) => {
+    let searchedMatch = state.matches.find(
+      (m) => m.id === matchInfo.id
+    ) as IMatch;
+
+    let modifiedSearchedMatch = {
+      ...searchedMatch,
+      playerOne: !matchInfo.playerIndex
+        ? { ...searchedMatch.playerOne, playerData: playerPerformance }
+        : searchedMatch.playerOne,
+      playerTwo: matchInfo.playerIndex
+        ? { ...searchedMatch.playerTwo, playerData: playerPerformance }
+        : searchedMatch.playerTwo,
+    };
+
+    return {
+      ...state,
+      matches: [
+        ...state.matches.filter((m) => {
+          m.id !== matchInfo.id;
+        }),
+        modifiedSearchedMatch,
+      ],
+      highlightedMatches: [
+        ...state.highlightedMatches.filter((m) => {
+          m.id !== matchInfo.id;
+        }),
+        modifiedSearchedMatch,
       ],
     };
   })

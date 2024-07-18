@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import {
   ISofaScoreEvent,
   ISofaScorePlayerData,
+  ISofaScorePlayerPerformance,
 } from '../interfaces/sofascore.interfaces';
 import { IPLayer } from '../interfaces/matches.interfaces';
 
@@ -29,10 +30,7 @@ export const searchForPlayerDataSuccess = createAction(
   '[Sofascore] Search for player data success',
   props<{
     matchInfo: { playerIndex: number; id: string };
-    playerPerformance: {
-      events: ISofaScoreEvent[];
-      points: { [i: number]: number };
-    };
+    playerPerformance: ISofaScorePlayerPerformance;
   }>()
 );
 

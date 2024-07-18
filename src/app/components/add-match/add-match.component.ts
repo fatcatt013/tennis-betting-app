@@ -12,6 +12,7 @@ import { IMatch } from 'src/app/redux/interfaces/matches.interfaces';
 })
 export class AddMatchComponent {
   matchForm: FormGroup;
+  surfaces = ['Hardcourt outdoor', 'Red clay', 'Grass'];
 
   constructor(
     private fb: FormBuilder,
@@ -22,7 +23,8 @@ export class AddMatchComponent {
       playerOneOdds: [0, [Validators.required, Validators.min(1)]],
       playerTwoName: ['', Validators.required],
       playerTwoOdds: [0, [Validators.required, Validators.min(1)]],
-      date: [''],
+      surface: [this.surfaces[1], Validators.required],
+      date: [new Date()],
       place: [''],
     });
   }
@@ -64,9 +66,9 @@ export class AddMatchComponent {
         totalMoneyInvested: 0,
         date: this.matchForm.value.date,
         place: this.matchForm.value.place,
+        groundType: this.matchForm.value.surface,
       };
 
-      console.log('New match!');
       this.store.dispatch(newMatch({ match: match }));
     }
   }

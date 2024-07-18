@@ -16,6 +16,7 @@ import { Store } from '@ngrx/store';
 import {
   ISofaScoreEvent,
   ISofaScorePlayerData,
+  ISofaScorePlayerPerformance,
 } from '../interfaces/sofascore.interfaces';
 
 @Injectable()
@@ -58,7 +59,7 @@ export class SofascoreEffects {
           searchForPlayerData({
             player: highlightedMatch?.playerTwo as IPLayer,
             id: highlightedMatch?.id as string,
-            playerIndex: 0,
+            playerIndex: 1,
           }),
         ];
       })
@@ -70,22 +71,15 @@ export class SofascoreEffects {
       ofType(searchForPlayerData),
       mergeMap(({ id, player, playerIndex }) => {
         return this.api
-          .getFromUrl<{
-            events: ISofaScoreEvent[];
-            points: { [i: number]: number };
-          }>(
+          .getFromUrl<ISofaScorePlayerPerformance>(
             `https://www.sofascore.com/api/v1/team/${player.sofascoreId}/performance`
           )
           .pipe(
-            map(
-              (res: {
-                events: ISofaScoreEvent[];
-                points: { [i: number]: number };
-              }) =>
-                searchForPlayerDataSuccess({
-                  matchInfo: { playerIndex: playerIndex, id: id },
-                  playerPerformance: res,
-                })
+            map((res: ISofaScorePlayerPerformance) =>
+              searchForPlayerDataSuccess({
+                matchInfo: { playerIndex: playerIndex, id: id },
+                playerPerformance: res,
+              })
             ),
             catchError((err: any) =>
               of(searchForPlayerDataFailure({ err: err }))

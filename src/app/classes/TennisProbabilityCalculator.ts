@@ -14,10 +14,12 @@ export class TennisProbabilityCalculatorService {
     const playerOneRecentForm = this.getRecentForm(match.playerOne);
     const playerTwoRecentForm = this.getRecentForm(match.playerTwo);
     const playerOneSurfacePerformance = this.getSurfacePerformance(
-      match.playerOne
+      match.playerOne,
+      match.groundType as string
     );
     const playerTwoSurfacePerformance = this.getSurfacePerformance(
-      match.playerTwo
+      match.playerTwo,
+      match.groundType as string
     );
 
     const baseProbabilities = this.calculateBaseProbabilities(
@@ -43,14 +45,60 @@ export class TennisProbabilityCalculatorService {
 
   // Helper method to get recent form for a player
   private getRecentForm(player: IPLayer): number {
-    // Implement logic to evaluate the recent form of the player
-    return 0.6; // Example recent form win rate (60%)
+    if (!player.playerData || !player.playerData.events) {
+      return 0.5; // Default to 50% if no data is available
+    }
+
+    const recentMatches = player.playerData.events; // Consider the last 5 matches
+    const playerId = player.sofascoreId;
+
+    let wins = 0;
+    recentMatches.map((match) => {
+      if (
+        (match.winnerCode === 1 && match.homeTeam.id === playerId) ||
+        (match.winnerCode === 2 && match.awayTeam.id === playerId)
+      ) {
+        wins++;
+      }
+    });
+
+    console.log(
+      `${player.name} (${player.elo}) recent form: ${wins / recentMatches.length}`
+    );
+
+    return wins / recentMatches.length;
   }
 
   // Helper method to get surface performance for a player
-  private getSurfacePerformance(player: IPLayer): number {
-    // Implement logic to evaluate the player's performance on the specific surface
-    return 0.55; // Example surface performance win rate (55%)
+  private getSurfacePerformance(player: IPLayer, surface: string): number {
+    if (!player.playerData || !player.playerData.events) {
+      return 0.5; // Default to 50% if no data is available
+    }
+
+    const recentMatches = player.playerData.events.filter((m) => {
+      m.groundType === surface;
+    }); // Consider the last 5 matches
+    const playerId = player.sofascoreId;
+
+    if (recentMatches.length === 0) {
+      return 0.5;
+    }
+
+    let wins = 0;
+    recentMatches.map((match) => {
+      if (
+        (match.winnerCode === 1 && match.homeTeam.id === playerId) ||
+        (match.winnerCode === 2 && match.awayTeam.id === playerId)
+      ) {
+        wins++;
+      }
+    });
+
+    console.log(
+      `${player.name} (${player.elo}) ${surface} performance: ${wins / recentMatches.length}`
+    );
+
+    return wins / recentMatches.length;
   }
 
   // Method to calculate base probabilities using ELO ratings

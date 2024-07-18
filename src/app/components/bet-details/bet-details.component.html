@@ -5,6 +5,11 @@
       Expected value: <strong>{{ this.expectedValue }}</strong>
     </p>
   </div>
+  <div>
+    <button class="btn btn-primary" (click)="calcProbs()">
+      Calculate probabilities
+    </button>
+  </div>
 </div>
 <div *ngIf="match?.bets?.length">
   <div *ngFor="let bet of match.bets" class="bet-card">

@@ -115,7 +115,7 @@
 
     <!-- Date and Place fields side by side -->
     <div class="row">
-      <div class="col-md-6">
+      <div class="col">
         <div class="form-group">
           <label for="date">Date</label>
           <input
@@ -129,7 +129,7 @@
         </div>
       </div>
 
-      <div class="col-md-6">
+      <div class="col">
         <div class="form-group">
           <label for="place">Place</label>
           <input
@@ -140,6 +140,31 @@
             class="form-control"
             placeholder="Enter Place"
           />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label for="surface">Surface:</label>
+          <ng-select
+            id="surface"
+            formControlName="surface"
+            [items]="surfaces"
+            [searchable]="false"
+          >
+          </ng-select>
+          <div
+            *ngIf="
+              matchForm.controls['surface'].invalid &&
+              (matchForm.controls['surface'].dirty ||
+                matchForm.controls['surface'].touched)
+            "
+            class="text-danger"
+          >
+            <div *ngIf="betForm.controls['surface'].errors?.required">
+              Match is required.
+            </div>
+          </div>
         </div>
       </div>
     </div>

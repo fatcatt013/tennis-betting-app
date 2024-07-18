@@ -25,6 +25,7 @@ interface Team {
 }
 
 export interface ISofaScoreEvent {
+  groundType: string;
   tournament: Tournament;
   status: Status;
   winnerCode: number;
@@ -140,4 +141,9 @@ interface TeamColors {
 interface FieldTranslations {
   nameTranslation: { ru: string };
   shortNameTranslation: any;
+}
+
+export interface ISofaScorePlayerPerformance {
+  events: ISofaScoreEvent[];
+  points: { [i: number]: number };
 }

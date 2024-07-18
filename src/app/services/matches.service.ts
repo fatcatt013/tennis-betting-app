@@ -8,12 +8,16 @@ import {
   unhighlightMatch,
 } from '../redux/actions/matches.actions';
 import { EBetType, IBet } from '../models/bet';
+import { TennisProbabilityCalculatorService } from '../classes/TennisProbabilityCalculator';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MatchesService {
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private probs: TennisProbabilityCalculatorService
+  ) {}
   highlightedMatches$: Observable<IMatch[]> = this.store.select(
     selectHighlightedMatches
   );
@@ -214,13 +218,7 @@ export class MatchesService {
 
   calculateProbabilities(match: IMatch): { [key: string]: number } {
     // Example probabilities; these should be based on real analysis
-    return {
-      Player1_Wins_Match: 0.498,
-      Player2_Wins_Match: 0.571,
-      Player1_Wins_First_Set: 0.498,
-      Player2_Wins_First_Set: 0.571,
-      // Add other probabilities as needed
-    };
+    return this.probs.calculateProbabilities(match);
   }
 
   determineOutcome(
