@@ -19,4 +19,5 @@ export class BetService {
   getBets(): IBet[] {
     return this.bets;
   }
+
 }
