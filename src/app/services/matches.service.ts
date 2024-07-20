@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { IMatch } from '../redux/interfaces/matches.interfaces';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, first, map, Observable } from 'rxjs';
-import { selectHighlightedMatches } from '../redux/selectors/matches.selectors';
+import { Observable, distinctUntilChanged, map, first } from 'rxjs';
+import { TennisProbabilityCalculatorService } from '../classes/TennisProbabilityCalculator';
+import { EBetType, IBet } from '../models/bet';
 import {
   highlightMatch,
   unhighlightMatch,
 } from '../redux/actions/matches.actions';
-import { EBetType, IBet } from '../models/bet';
-import { TennisProbabilityCalculatorService } from '../classes/TennisProbabilityCalculator';
+import { IMatch } from '../redux/interfaces/matches.interfaces';
+import { selectHighlightedMatches } from '../redux/selectors/matches.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -68,17 +68,17 @@ export class MatchesService {
 
         switch (type) {
           case EBetType.FIRST_SET_WIN:
-            outcomes[player.name].firstSetWin += parseInt(
+            outcomes[player.name].firstSetWin += parseFloat(
               (amount * odds).toFixed(2)
             );
             break;
           case EBetType.SECOND_SET_WIN:
-            outcomes[player.name].secondSetWin += parseInt(
+            outcomes[player.name].secondSetWin += parseFloat(
               (amount * odds).toFixed(2)
             );
             break;
           case EBetType.MATCH_WIN:
-            outcomes[player.name].matchWin += parseInt(
+            outcomes[player.name].matchWin += parseFloat(
               (amount * odds).toFixed(2)
             );
             break;
@@ -198,14 +198,32 @@ export class MatchesService {
       .trim();
   }
 
+  calculateDecimalOdds(probabilities: { [key: string]: number }): {
+    [key: string]: number;
+  } {
+    const odds: { [key: string]: number } = {};
+
+    for (const key in probabilities) {
+      if (probabilities.hasOwnProperty(key)) {
+        odds[key] = parseFloat((1 / probabilities[key]).toFixed(2));
+      }
+    }
+
+    return odds;
+  }
+
   calculateExpectedValue(match: IMatch): number {
     let totalEV = 0;
 
     // Define probabilities for outcomes (these should be based on real data/analysis)
     const probabilities = this.calculateProbabilities(match);
+    console.log('Calculating EV');
+    console.log(probabilities);
 
     for (const bet of match.bets) {
-      const outcome = this.determineOutcome(bet, probabilities);
+      const outcome = this.determineOutcome(bet, probabilities, match);
+      console.log('Outcome:');
+      console.log(outcome);
       const winAmount = bet.odds * bet.amount - bet.amount; // Net profit if the bet wins
       const loseAmount = -bet.amount; // Loss if the bet loses
 
@@ -223,26 +241,36 @@ export class MatchesService {
 
   determineOutcome(
     bet: IBet,
-    probabilities: { [key: string]: number }
+    probabilities: { [key: string]: number },
+    match: IMatch
   ): { pWin: number; pLose: number } {
     let pWin: number;
+    const player = bet.player.name;
+
     switch (bet.type) {
       case EBetType.MATCH_WIN:
         pWin =
-          bet.player.name === 'Player 1'
+          player === match.playerOne.name
             ? probabilities['Player1_Wins_Match']
             : probabilities['Player2_Wins_Match'];
         break;
       case EBetType.FIRST_SET_WIN:
         pWin =
-          bet.player.name === 'Player 1'
+          player === match.playerOne.name
             ? probabilities['Player1_Wins_First_Set']
             : probabilities['Player2_Wins_First_Set'];
         break;
-      // Add other bet types as needed
+      case EBetType.SECOND_SET_WIN:
+        pWin =
+          player === match.playerOne.name
+            ? probabilities['Player1_Wins_Second_Set']
+            : probabilities['Player2_Wins_Second_Set'];
+        break;
+      // Add cases for other bet types as needed
       default:
         pWin = 0;
     }
+
     return { pWin, pLose: 1 - pWin };
   }
 

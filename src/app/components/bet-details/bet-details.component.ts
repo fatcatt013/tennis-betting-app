@@ -24,6 +24,7 @@ export class BetDetailsComponent implements OnInit {
   }
 
   calcProbs() {
-    console.log(this.probs.calculateProbabilities(this.match));
+    let probs = this.probs.calculateProbabilities(this.match);
+    console.log(this.matchesService.calculateDecimalOdds(probs));
   }
 }
