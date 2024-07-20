@@ -261,14 +261,14 @@ export class MatchesService {
             : probabilities['Player2_Wins_First_Set'];
         break;
       case EBetType.SECOND_SET_WIN:
-        pWin =
-          player === match.playerOne.name
-            ? probabilities['Player1_Wins_Second_Set']
-            : probabilities['Player2_Wins_Second_Set'];
+        pWin = 1 / bet.odds;
         break;
       // Add cases for other bet types as needed
       default:
         pWin = 0;
+    }
+    if (bet.type === EBetType.SECOND_SET_WIN) {
+      console.log(bet.type);
     }
 
     return { pWin, pLose: 1 - pWin };

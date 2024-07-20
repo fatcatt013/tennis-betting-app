@@ -164,8 +164,8 @@ export class MatchesEffects {
             player2: IPLayer;
           }>(
             `/elo?${new URLSearchParams({
-              player1: match.playerOne.name.replace(' ', ''),
-              player2: match.playerTwo.name.replace(' ', ''),
+              player1: match.playerOne.name.replaceAll(' ', ''),
+              player2: match.playerTwo.name.replaceAll(' ', ''),
             })}`
           )
           .pipe(
