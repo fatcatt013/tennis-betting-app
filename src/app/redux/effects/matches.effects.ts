@@ -120,8 +120,29 @@ export class MatchesEffects {
     this.actions$.pipe(
       ofType(editMatch),
       mergeMap(({ id, data }) => {
+        let strippedData = {
+          ...data,
+          playerOne: {
+            ...data.playerOne,
+            playerData: undefined,
+          },
+          playerTwo: {
+            ...data.playerTwo,
+            playerData: undefined,
+          },
+          bets: data.bets.map((bet) => {
+            return {
+              ...bet,
+              player: {
+                ...bet.player,
+                playerData: undefined,
+              },
+            };
+          }),
+        };
+
         return this.api
-          .put<{ matches: IMatch[] }>(`/data/matches/${id}`, data)
+          .put<{ matches: IMatch[] }>(`/data/matches/${id}`, strippedData)
           .pipe(
             map((res: { matches: IMatch[] }) =>
               editMatchSuccess({ matches: res.matches })
