@@ -7,8 +7,11 @@ import {
   searchForMatch,
   searchForMatchSuccess,
 } from 'src/app/redux/actions/sofascore.actions';
-import { IMatch } from 'src/app/redux/interfaces/matches.interfaces';
-import { ISofaScoreEvent } from 'src/app/redux/interfaces/sofascore.interfaces';
+import { IMatch, IPLayer } from 'src/app/redux/interfaces/matches.interfaces';
+import {
+  ISofaScoreEvent,
+  SofascoreTeam,
+} from 'src/app/redux/interfaces/sofascore.interfaces';
 import { selectHighlightedMatches } from 'src/app/redux/selectors/matches.selectors';
 import { ApiService } from 'src/app/services/api.service';
 import { fetchElo } from 'src/app/redux/actions/matches.actions';
@@ -77,5 +80,12 @@ export class MatchesOverviewComponent implements OnInit {
 
   handleFetchElo(match: IMatch) {
     this.store.dispatch(fetchElo({ match }));
+  }
+
+  findPlayer(team: SofascoreTeam, match: IMatch): IPLayer {
+    return [match.playerOne, match.playerTwo].find((player) => {
+      let name = player.name.split(' ');
+      return team.name.includes(name[name.length - 1]);
+    }) as IPLayer;
   }
 }

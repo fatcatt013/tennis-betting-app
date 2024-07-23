@@ -25,10 +25,13 @@ export const initialState: MatchesState = {
 
 export const matchesReducer = createReducer(
   initialState,
-  on(loadMatchesSuccess, (_, { matches }) => ({
-    ..._,
+  on(loadMatchesSuccess, (state, { matches }) => ({
+    ...state,
     matches: matches,
-    highlightedMatches: matches.filter((match) => match.bets.length),
+    highlightedMatches: [
+      ...state.highlightedMatches,
+      ...matches.filter((match) => match.bets.length),
+    ],
   })),
   on(newMatchSuccess, (_, { matches }) => ({
     ..._,

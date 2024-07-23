@@ -68,20 +68,26 @@
                             {{ sofascoreData.match.homeTeam.name }}
                           </p>
                           <p>
-                            <strong>Short Name:</strong>
-                            {{ sofascoreData.match.homeTeam.shortName }}
-                          </p>
-                          <p>
-                            <strong>Country:</strong>
-                            {{ sofascoreData.match.homeTeam.country.name }}
-                          </p>
-                          <p>
                             <strong>Ranking:</strong>
                             {{ sofascoreData.match.homeTeam.ranking }}
                           </p>
-                          <p *ngIf="highlightedMatch.playerOne.elo">
+                          <p>
                             <strong>Elo:</strong>
-                            {{ highlightedMatch.playerOne.elo }}
+                            {{
+                              findPlayer(
+                                sofascoreData.match.homeTeam,
+                                highlightedMatch
+                              ).elo
+                            }}
+                          </p>
+                          <p>
+                            <strong>Odds:</strong>
+                            {{
+                              findPlayer(
+                                sofascoreData.match.homeTeam,
+                                highlightedMatch
+                              ).startingOdds
+                            }}
                           </p>
                         </div>
                         <div class="team-card">
@@ -91,21 +97,25 @@
                             {{ sofascoreData.match.awayTeam.name }}
                           </p>
                           <p>
-                            <strong>Short Name:</strong>
-                            {{ sofascoreData.match.awayTeam.shortName }}
-                          </p>
-                          <p>
-                            <strong>Country:</strong>
-                            {{ sofascoreData.match.awayTeam.country.name }}
-                          </p>
-                          <p>
                             <strong>Ranking:</strong>
                             {{ sofascoreData.match.awayTeam.ranking }}
                           </p>
-                          <p *ngIf="highlightedMatch.playerTwo.elo">
+                          <p>
                             <strong>Elo:</strong>
-                            {{ highlightedMatch.playerTwo.elo }}
+                            {{
+                              findPlayer(
+                                sofascoreData.match.awayTeam,
+                                highlightedMatch
+                              ).elo
+                            }}
                           </p>
+                          <strong>Odds:</strong>
+                          {{
+                            findPlayer(
+                              sofascoreData.match.awayTeam,
+                              highlightedMatch
+                            ).startingOdds
+                          }}
                         </div>
                       </div>
                     </div>

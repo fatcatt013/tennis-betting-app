@@ -13,7 +13,7 @@ interface Country {
   name: string;
 }
 
-interface Team {
+export interface SofascoreTeam {
   name: string;
   slug: string;
   shortName: string;
@@ -29,8 +29,8 @@ export interface ISofaScoreEvent {
   tournament: Tournament;
   status: Status;
   winnerCode: number;
-  homeTeam: Team;
-  awayTeam: Team;
+  homeTeam: SofascoreTeam;
+  awayTeam: SofascoreTeam;
   homeScore: any;
   awayScore: any;
   id: number;

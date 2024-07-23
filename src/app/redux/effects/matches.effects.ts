@@ -218,8 +218,8 @@ export class MatchesEffects {
             id: matchId,
             data: {
               ...matchToEdit,
-              playerOne: { ...P1, elo: player1.elo ?? 0 },
-              playerTwo: { ...P2, elo: player2.elo ?? 0 },
+              playerOne: { ...P1, elo: player1.elo ?? 1000 },
+              playerTwo: { ...P2, elo: player2.elo ?? 1000 },
             },
           }),
         ];
