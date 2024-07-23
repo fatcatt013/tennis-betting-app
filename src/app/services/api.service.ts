@@ -11,7 +11,7 @@ type ApiRequestOptions = {
 })
 export class ApiService {
   public get _baseUrl() {
-    return `http://localhost:955/api`;
+    return `http://localhost:3000/api`;
   }
 
   private readonly DEFAULT_HEADERS: any = {

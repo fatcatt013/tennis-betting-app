@@ -18,6 +18,7 @@ export class BetEntryComponent implements OnInit {
   @Input() matchId!: string;
   matches$: Observable<IMatch[]> = this.store.select(selectMatches);
 
+
   betTypes: IBetType[] = [
     {
       value: EBetType.FIRST_SET_WIN,
@@ -46,6 +47,7 @@ export class BetEntryComponent implements OnInit {
       player: [null, [Validators.required]],
       type: [null, [Validators.required]],
     });
+
   }
 
   onSubmit(): void {
@@ -56,11 +58,22 @@ export class BetEntryComponent implements OnInit {
           id: val.match.id,
           data: {
             ...val.match,
+            playerOne: {
+              ...val.match.playerOne,
+              playerData: undefined
+            },
+            playerTwo: {
+              ...val.match.playerTwo,
+              playerData: undefined
+            },
             totalMoneyInvested: val.match.totalMoneyInvested + val.amount,
             bets: [
               ...val.match.bets,
               {
-                player: val.player,
+                player: {
+                  ...val.player,
+                  playerData: undefined
+                },
                 type: val.type.value,
                 amount: val.amount,
                 odds: val.odds,
