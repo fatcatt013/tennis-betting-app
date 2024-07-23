@@ -77,7 +77,7 @@
                               findPlayer(
                                 sofascoreData.match.homeTeam,
                                 highlightedMatch
-                              ).elo
+                              )?.elo ?? 'Unknown'
                             }}
                           </p>
                           <p>
@@ -86,7 +86,7 @@
                               findPlayer(
                                 sofascoreData.match.homeTeam,
                                 highlightedMatch
-                              ).startingOdds
+                              )?.startingOdds
                             }}
                           </p>
                         </div>
@@ -106,7 +106,7 @@
                               findPlayer(
                                 sofascoreData.match.awayTeam,
                                 highlightedMatch
-                              ).elo
+                              )?.elo ?? 'Unknown'
                             }}
                           </p>
                           <strong>Odds:</strong>
@@ -114,7 +114,7 @@
                             findPlayer(
                               sofascoreData.match.awayTeam,
                               highlightedMatch
-                            ).startingOdds
+                            )?.startingOdds
                           }}
                         </div>
                       </div>

@@ -78,37 +78,51 @@ export const matchesReducer = createReducer(
   }),
   on(searchForMatchSuccess, (state, { match, id }) => {
     let searchedMatch = state.matches.find((m) => m.id === id) as IMatch;
+
     let playerIds: { p1: number; p2: number } = {
       p1: match.homeTeam.id,
       p2: match.awayTeam.id,
     };
+
     return {
       ...state,
       matches: [
-        ...state.matches.filter((m) => {
-          m.id !== id;
-        }),
-        {
-          ...searchedMatch,
-          playerOne: { ...searchedMatch.playerOne, sofascoreId: playerIds.p1 },
-          playerTwo: { ...searchedMatch.playerTwo, sofascoreId: playerIds.p2 },
-          groundType: match.groundType
-            ? match.groundType
-            : searchedMatch.groundType,
-        },
+        ...state.matches.filter((m) => m.id !== id),
+        ...[
+          {
+            ...searchedMatch,
+            playerOne: {
+              ...searchedMatch.playerOne,
+              sofascoreId: playerIds.p1,
+            },
+            playerTwo: {
+              ...searchedMatch.playerTwo,
+              sofascoreId: playerIds.p2,
+            },
+            groundType: match.groundType
+              ? match.groundType
+              : searchedMatch.groundType,
+          },
+        ],
       ],
       highlightedMatches: [
-        ...state.highlightedMatches.filter((m) => {
-          m.id !== id;
-        }),
-        {
-          ...searchedMatch,
-          playerOne: { ...searchedMatch.playerOne, sofascoreId: playerIds.p1 },
-          playerTwo: { ...searchedMatch.playerTwo, sofascoreId: playerIds.p2 },
-          groundType: match.groundType
-            ? match.groundType
-            : searchedMatch.groundType,
-        },
+        ...state.highlightedMatches.filter((m) => m.id !== id),
+        ...[
+          {
+            ...searchedMatch,
+            playerOne: {
+              ...searchedMatch.playerOne,
+              sofascoreId: playerIds.p1,
+            },
+            playerTwo: {
+              ...searchedMatch.playerTwo,
+              sofascoreId: playerIds.p2,
+            },
+            groundType: match.groundType
+              ? match.groundType
+              : searchedMatch.groundType,
+          },
+        ],
       ],
     };
   }),
@@ -130,15 +144,11 @@ export const matchesReducer = createReducer(
     return {
       ...state,
       matches: [
-        ...state.matches.filter((m) => {
-          m.id !== matchInfo.id;
-        }),
+        ...state.matches.filter((m) => m.id !== matchInfo.id),
         modifiedSearchedMatch,
       ],
       highlightedMatches: [
-        ...state.highlightedMatches.filter((m) => {
-          m.id !== matchInfo.id;
-        }),
+        ...state.highlightedMatches.filter((m) => m.id !== matchInfo.id),
         modifiedSearchedMatch,
       ],
     };
