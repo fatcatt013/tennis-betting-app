@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { IMatch } from '../interfaces/matches.interfaces';
 import {
+  deleteMatchSuccess,
   editMatchSuccess,
   highlightMatch,
   loadMatchesSuccess,
@@ -57,6 +58,18 @@ export const matchesReducer = createReducer(
     return {
       ...state,
       matches: matches,
+      highlightedMatches: newHighlightedMatches,
+    };
+  }),
+  on(deleteMatchSuccess, (state, { data }) => {
+    const highlightedIds = state.highlightedMatches.map((match) => match.id);
+    const newHighlightedMatches = data.filter((match) =>
+      highlightedIds.includes(match.id)
+    );
+
+    return {
+      ...state,
+      matches: data,
       highlightedMatches: newHighlightedMatches,
     };
   }),
