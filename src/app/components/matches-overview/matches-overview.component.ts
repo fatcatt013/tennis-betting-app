@@ -15,6 +15,9 @@ import {
 import { selectHighlightedMatches } from 'src/app/redux/selectors/matches.selectors';
 import { ApiService } from 'src/app/services/api.service';
 import { fetchElo } from 'src/app/redux/actions/matches.actions';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeEloModalComponent } from './change-elo-modal/change-elo-modal.component';
+import { TennisProbabilityCalculatorService } from 'src/app/classes/TennisProbabilityCalculator';
 
 @Component({
   selector: 'app-matches-overview',
@@ -36,7 +39,9 @@ export class MatchesOverviewComponent implements OnInit {
     public matchesService: MatchesService,
     private store: Store,
     private updates$: Actions,
-    private api: ApiService
+    private api: ApiService,
+    private modal: NgbModal,
+    private probs: TennisProbabilityCalculatorService
   ) {}
 
   ngOnInit() {
@@ -87,5 +92,15 @@ export class MatchesOverviewComponent implements OnInit {
       let name = player.name.split(' ');
       return team.name.includes(name[name.length - 1]);
     }) as IPLayer;
+  }
+
+  toggleChangeEloModal(match: IMatch) {
+    const modal = this.modal.open(ChangeEloModalComponent);
+    modal.componentInstance.match = match;
+  }
+
+  calcProbs(match: IMatch) {
+    let probs = this.probs.calculateProbabilities(match);
+    console.log(this.matchesService.calculateDecimalOdds(probs));
   }
 }

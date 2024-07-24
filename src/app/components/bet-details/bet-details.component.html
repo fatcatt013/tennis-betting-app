@@ -1,14 +1,22 @@
 <div class="my-5">
-  <app-match-outcomes-table [matches]="[match]"></app-match-outcomes-table>
+  <div class="row">
+    <div class="card col-4 px-2">
+      <div class="card-body">
+        <app-bet-entry [matchId]="match.id"></app-bet-entry>
+      </div>
+    </div>
+    <div class="col-8 px-2 d-flex">
+      <app-match-outcomes-table
+        class="flex-grow-1"
+        [matches]="[match]"
+      ></app-match-outcomes-table>
+    </div>
+  </div>
+
   <div>
     <p>
       Expected value: <strong>{{ this.expectedValue }}</strong>
     </p>
-  </div>
-  <div>
-    <button class="btn btn-primary" (click)="calcProbs()">
-      Calculate probabilities
-    </button>
   </div>
 </div>
 <div *ngIf="match?.bets?.length">

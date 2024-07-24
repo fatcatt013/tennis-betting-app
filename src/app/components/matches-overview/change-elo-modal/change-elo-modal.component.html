@@ -1,0 +1,45 @@
+<div class="card" *ngIf="betForm">
+  <div class="card-header">Change ELO</div>
+  <div class="card-body">
+    <div class="row" [formGroup]="betForm">
+      <div class="col-12 form-group">
+        <label for="player">Player:</label>
+        <ng-select
+          id="player"
+          formControlName="player"
+          [items]="[match.playerOne, match.playerTwo]"
+          bindLabel="name"
+          [searchable]="false"
+          [clearable]="false"
+        />
+      </div>
+      <div class="col-12 form-group">
+        <label for="amount">ELO:</label>
+        <input
+          id="elo"
+          type="number"
+          autocomplete="off"
+          formControlName="elo"
+          class="form-control"
+        />
+        <div
+          *ngIf="
+            betForm.controls['elo'].invalid &&
+            (betForm.controls['elo'].dirty || betForm.controls['elo'].touched)
+          "
+          class="text-danger"
+        >
+          <div *ngIf="betForm.controls['elo'].errors?.required">
+            ELO is required.
+          </div>
+          <div *ngIf="betForm.controls['elo'].errors?.min">
+            ELO must be greater than 0.
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="handleSubmitChangeElo()">
+        Submit
+      </button>
+    </div>
+  </div>
+</div>

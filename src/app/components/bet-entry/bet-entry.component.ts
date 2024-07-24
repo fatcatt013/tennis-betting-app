@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable } from 'rxjs';
 import { MatchesService } from 'src/app/services/matches.service';
 import { EBetType, IBetType } from 'src/app/models/bet';
 import { editMatch, newMatch } from 'src/app/redux/actions/matches.actions';
@@ -15,9 +15,8 @@ import { selectMatches } from 'src/app/redux/selectors/matches.selectors';
 })
 export class BetEntryComponent implements OnInit {
   betForm!: FormGroup;
-  @Input() matchId!: string;
+  @Input() matchId?: string;
   matches$: Observable<IMatch[]> = this.store.select(selectMatches);
-
 
   betTypes: IBetType[] = [
     {
@@ -40,14 +39,18 @@ export class BetEntryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.betForm = this.fb.group({
-      match: [null, Validators.required],
-      amount: ['', [Validators.required, Validators.min(1)]],
-      odds: ['', [Validators.required, Validators.min(1)]],
-      player: [null, [Validators.required]],
-      type: [null, [Validators.required]],
+    this.matches$.pipe(distinctUntilChanged()).subscribe((matches) => {
+      this.betForm = this.fb.group({
+        match: [
+          this.matchId ? matches.find((m) => m.id === this.matchId) : null,
+          Validators.required,
+        ],
+        amount: ['', [Validators.required, Validators.min(1)]],
+        odds: ['', [Validators.required, Validators.min(1)]],
+        player: [null, [Validators.required]],
+        type: [null, [Validators.required]],
+      });
     });
-
   }
 
   onSubmit(): void {
@@ -60,11 +63,11 @@ export class BetEntryComponent implements OnInit {
             ...val.match,
             playerOne: {
               ...val.match.playerOne,
-              playerData: undefined
+              playerData: undefined,
             },
             playerTwo: {
               ...val.match.playerTwo,
-              playerData: undefined
+              playerData: undefined,
             },
             totalMoneyInvested: val.match.totalMoneyInvested + val.amount,
             bets: [
@@ -72,7 +75,7 @@ export class BetEntryComponent implements OnInit {
               {
                 player: {
                   ...val.player,
-                  playerData: undefined
+                  playerData: undefined,
                 },
                 type: val.type.value,
                 amount: val.amount,

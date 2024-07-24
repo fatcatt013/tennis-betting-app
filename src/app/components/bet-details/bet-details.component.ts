@@ -12,19 +12,11 @@ export class BetDetailsComponent implements OnInit {
   @Input() match!: IMatch;
   expectedValue: string = '';
 
-  constructor(
-    public matchesService: MatchesService,
-    private probs: TennisProbabilityCalculatorService
-  ) {}
+  constructor(public matchesService: MatchesService) {}
 
   ngOnInit(): void {
     this.expectedValue = this.matchesService
       .calculateExpectedValue(this.match)
       .toFixed(2);
-  }
-
-  calcProbs() {
-    let probs = this.probs.calculateProbabilities(this.match);
-    console.log(this.matchesService.calculateDecimalOdds(probs));
   }
 }

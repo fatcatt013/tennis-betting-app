@@ -26,6 +26,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatchOutcomesTableComponent } from './components/match-outcomes-table/match-outcomes-table.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChangeEloModalComponent } from './components/matches-overview/change-elo-modal/change-elo-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatchesOverviewComponent,
     BetDetailsComponent,
     MatchOutcomesTableComponent,
+    ChangeEloModalComponent,
   ],
   imports: [
     BrowserModule,
